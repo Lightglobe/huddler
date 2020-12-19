@@ -16,7 +16,7 @@ import {
   Layer,
   ResponsiveContext,
 } from "grommet";
-import { FormClose, Notification } from "grommet-icons";
+import { Clock, Location, FormClose, Notification } from "grommet-icons";
 
 const theme = {
   global: {
@@ -79,7 +79,7 @@ function App() {
                         <Text
                           weight="bold"
                           size="xlarge"
-                          margin={{ bottom: "small" }}
+                          margin={{ bottom: "xsmall" }}
                         >
                           Night by Sky
                         </Text>
@@ -91,12 +91,20 @@ function App() {
                   </CardHeader>
                   <CardBody>
                     <Box
+                      direction="row"
+                      align="center"
+                      pad={{ left: "medium", top: "small" }}
+                    >
+                      <Clock /> {"01:00PM, Today |"}
+                      <Location /> {" London, UK"}
+                    </Box>
+                    <Box
                       pad="medium"
                       direction="row"
                       background="light-2"
                       gap="medium"
                     >
-                      <Stack anchor="right">
+                      <Stack anchor="right" margin={{ left: "large" }}>
                         <Avatar
                           size="medium"
                           src="http://placeimg.com/640/480/people"
@@ -104,10 +112,12 @@ function App() {
                         <Avatar
                           size="medium"
                           src="http://placeimg.com/640/480/people"
+                          margin={{ right: "large" }}
                         />
                         <Avatar
                           size="medium"
                           src="http://placeimg.com/640/480/people"
+                          margin={{ right: "medium" }}
                         />
                       </Stack>
                     </Box>
