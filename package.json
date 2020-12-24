@@ -18,9 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "build-storybook": "build-storybook -c storybook -o storybook-static -s ./storybook/public",
-    "storybook": "cross-env NODE_ENV=development start-storybook -p 9001 -c storybook -s ./storybook/public"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
