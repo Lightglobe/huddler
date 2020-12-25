@@ -68,3 +68,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Folder Structure
+
+app/
+├── layout
+│ └── App.js
+├── features
+│ └── event
+│ │ ├── EventDashboard/
+│ │ │ └── EventDashboard.js
+│ │ ├── EventList
+│ │ │ └── EventItem.js
+│ │ │ └── EventAttendee.js
+│ └── EventActivity/
+├── NavBar/
+│ └── Nav
