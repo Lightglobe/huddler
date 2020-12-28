@@ -10,25 +10,26 @@ import {
   Text,
   Button,
 } from "grommet";
-import { Clock, Location } from "grommet-icons";
+import { format } from "date-fns";
 
+import { Clock, Location } from "grommet-icons";
+import EventAttendee from "../EventAttendee/EventAttendee";
 export default class Event extends Component {
   render() {
+    const event = this.props.event;
+
     return (
       <Card width="large" background="darkTwo" elevation="none" margin="small">
         <CardHeader pad="medium">
           <Box direction="row" align="center">
-            <Avatar
-              src="http://placeimg.com/640/480/people"
-              size="large"
-              round="small"
-            />
+            <Avatar src={event.hostPhotoURL} size="large" round="small" />
             <Box direction="column" pad={{ left: "medium" }}>
               <Text weight="bold" size="large" margin={{ bottom: "xsmall" }}>
-                Night by Sky
+                {event.title}
               </Text>
               <Text size="medium">
-                Posted by <Anchor color="brand" label="Alex" href="#" />
+                Hosted by{" "}
+                <Anchor color="brand" label={event.hostedBy} href="#" />
               </Text>
             </Box>
           </Box>
@@ -39,34 +40,33 @@ export default class Event extends Component {
             pad={{
               left: "medium",
               right: "medium",
-              bottom: "bottom",
+              bottom: "small",
             }}
+            margin={{ bottom: "large" }}
           >
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Text>
+            <Text>{event.description}</Text>
           </Box>
           <Box pad="medium" direction="row" background="darkThree" gap="medium">
             <Box align="center" direction="row" gap="small">
-              <Avatar size="medium" src="http://placeimg.com/640/480/people" />
-              <Avatar size="medium" src="http://placeimg.com/640/480/people" />
-              <Avatar size="medium" src="http://placeimg.com/640/480/people" />
+              {event.attendees.map((attendee) => (
+                <EventAttendee
+                  key={attendee.id}
+                  id={attendee.id}
+                  name={attendee.name}
+                  photoURL={attendee.photoURL}
+                />
+              ))}
             </Box>
           </Box>
         </CardBody>
         <CardFooter pad="medium" background="darkTwo">
           <Box direction="row" align="center" gap="medium">
             <Box direction="row" gap="xxsmall">
-              <Clock /> <Text>1:00 PM, Today</Text>
+              <Clock />{" "}
+              <Text>{format(new Date(event.date), "dd/MM/yyyy HH:mm")}</Text>
             </Box>
             <Box direction="row" gap="xxsmall">
-              <Location /> <Text>London, UK</Text>
+              <Location /> <Text>{event.city}</Text>
             </Box>
           </Box>
           <Button color="brand" label="View" />

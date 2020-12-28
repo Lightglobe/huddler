@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import { Box, Grommet, ResponsiveContext } from "grommet";
+import { Route } from "react-router-dom";
 
 import Navbar from "./Navbar/Navbar";
 import EventDashboard from "../../features/event/EventDashboard/EventDashboard";
+import EventDetails from "../../features/event/EventDetails/EventDetails";
+import PeopleDashboard from "../../features/user/PeopleDashboard/PeopleDashboard";
+import UserDetails from "../../features/user/UserDetails/UserDetails";
+import SettingsDashboard from "../../features/user/Settings/SettingsDashboard";
+import EventForm from "../../features/event/EventForm/EventForm";
+import Home from "../../features/home/Home";
+
 const theme = {
   global: {
     colors: {
@@ -15,6 +23,20 @@ const theme = {
       family: "Ubuntu",
       size: "16px",
       height: "18px",
+    },
+    drop: {
+      elevation: {
+        none: "none",
+        small: "none",
+        xsmall: "none",
+        medium: "none",
+        large: "none",
+      },
+      shadowSize: {
+        small: "0",
+        medium: "0",
+        large: "0",
+      },
     },
   },
 };
@@ -37,14 +59,42 @@ export default class App extends Component {
         <ResponsiveContext.Consumer>
           {(size) => (
             <Box fill>
-              <Navbar
-                setShowSidebar={this.setShowSidebar}
-                showSidebar={showSidebar}
-              />
-              <EventDashboard
-                size={size}
-                showSidebar={this.state.showSidebar}
-                setShowSidebar={this.setShowSidebar}
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route
+                path="/(.+)"
+                render={() => (
+                  <>
+                    <Navbar
+                      setShowSidebar={this.setShowSidebar}
+                      showSidebar={showSidebar}
+                    />
+
+                    <Route path="/events">
+                      <EventDashboard
+                        size={size}
+                        showSidebar={this.state.showSidebar}
+                        setShowSidebar={this.setShowSidebar}
+                      />
+                    </Route>
+                    <Route path="/events/:id">
+                      <EventDetails />
+                    </Route>
+                    <Route path="/people">
+                      <PeopleDashboard />
+                    </Route>
+                    <Route path="/profile/:id">
+                      <UserDetails />
+                    </Route>
+                    <Route path="/settings">
+                      <SettingsDashboard />
+                    </Route>
+                    <Route path="/createEvent">
+                      <EventForm />
+                    </Route>
+                  </>
+                )}
               />
             </Box>
           )}
