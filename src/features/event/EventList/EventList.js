@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { InfiniteScroll } from "grommet";
+import { InfiniteScroll, Box } from "grommet";
 import Event from "../EventList/EventItem/Event";
 
 export default class EventList extends Component {

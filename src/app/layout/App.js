@@ -39,6 +39,31 @@ const theme = {
       },
     },
   },
+  formField: {
+    label: {
+      size: "16px",
+      margin: "5px",
+      weight: 400,
+      alignSelf: "start",
+    },
+
+    disabled: {
+      background: {
+        color: "status-disabled",
+        opacity: true,
+      },
+    },
+    content: {
+      pad: "large",
+    },
+    error: {
+      background: {
+        color: "status-critical",
+        opacity: "weak",
+      },
+    },
+    margin: "none",
+  },
 };
 
 export default class App extends Component {
@@ -55,10 +80,14 @@ export default class App extends Component {
   render() {
     const { showSidebar } = this.state;
     return (
-      <Grommet theme={theme}>
+      <Grommet theme={theme} full>
         <ResponsiveContext.Consumer>
           {(size) => (
-            <Box fill>
+            <Box>
+              <Navbar
+                setShowSidebar={this.setShowSidebar}
+                showSidebar={showSidebar}
+              />
               <Route exact path="/">
                 <Home />
               </Route>
@@ -66,11 +95,6 @@ export default class App extends Component {
                 path="/(.+)"
                 render={() => (
                   <>
-                    <Navbar
-                      setShowSidebar={this.setShowSidebar}
-                      showSidebar={showSidebar}
-                    />
-
                     <Route path="/events">
                       <EventDashboard
                         size={size}

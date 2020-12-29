@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Box, Button, Collapsible, Layer } from "grommet";
+import { Box, Button, Collapsible, Layer, Text } from "grommet";
 import { FormClose } from "grommet-icons";
 
+import EventForm from "../EventForm/EventForm";
 export default class EventActivity extends Component {
   render() {
     return (
@@ -19,15 +20,20 @@ export default class EventActivity extends Component {
             <Box
               width="medium"
               background="darkTwo"
-              align="center"
-              justify="center"
               style={{
                 height: "100vh",
                 position: "sticky",
                 top: "0",
               }}
             >
-              Sidebar
+              <Box
+                direction="column-reverse"
+                margin={{ bottom: "medium" }}
+                align="center"
+                fill="vertical"
+              >
+                {this.props.children}
+              </Box>
             </Box>
           </Collapsible>
         ) : (

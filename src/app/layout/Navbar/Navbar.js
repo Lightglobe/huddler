@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Nav from "./Nav";
 import { Notification } from "grommet-icons";
 import { Heading, Box, Button } from "grommet";
-import { NavLink, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import SignedIn from "./Menu/SignedIn";
 import SignedOut from "./Menu/SignedOut";
 class Navbar extends Component {
