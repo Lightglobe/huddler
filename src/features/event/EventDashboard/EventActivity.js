@@ -1,22 +1,13 @@
 import React, { Component } from "react";
-import { Box, Button, Collapsible, Layer, Text } from "grommet";
+import { Box, Button, Collapsible, Layer } from "grommet";
 import { FormClose } from "grommet-icons";
 
-import EventForm from "../EventForm/EventForm";
 export default class EventActivity extends Component {
   render() {
     return (
       <React.Fragment>
         {!this.props.showSidebar || this.props.size !== "small" ? (
-          <Collapsible
-            direction="horizontal"
-            open={this.props.showSidebar}
-            style={{
-              height: "100vh",
-              position: "sticky",
-              top: "0",
-            }}
-          >
+          <Collapsible direction="horizontal" open={this.props.showSidebar}>
             <Box
               width="medium"
               background="darkTwo"
@@ -27,12 +18,12 @@ export default class EventActivity extends Component {
               }}
             >
               <Box
-                direction="column-reverse"
+                direction="column"
                 margin={{ bottom: "medium" }}
                 align="center"
                 fill="vertical"
               >
-                {this.props.children}
+                {this.props.content}
               </Box>
             </Box>
           </Collapsible>
@@ -48,7 +39,7 @@ export default class EventActivity extends Component {
               <Button
                 icon={<FormClose />}
                 onClick={() =>
-                  this.props.setShowSidebar(!this.props.showSidebar)
+                  this.props.setShowSidebar(!this.props.showSidebar, "")
                 }
               />
             </Box>

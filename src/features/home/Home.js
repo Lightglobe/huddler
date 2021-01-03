@@ -1,17 +1,15 @@
 import React from "react";
-import { Grid, Box, Main } from "grommet";
+import { Box } from "grommet";
+
 import LoginForm from "../user/LoginForm/LoginForm";
-const Home = () => {
+const Home = ({ size }) => {
   return (
     <Box background="darkOne" style={{ height: "100vh" }}>
-      <Box direction="row-responsive">
-        <Box style={{ width: "50%" }} margin={{ top: "100px" }} align="center">
-          <img src="/assets/team_login.svg" style={{ width: "85%" }} />
-        </Box>
-        <Box style={{ width: "50%" }} align="center">
+      <Box direction="row">
+        <Box style={{ width: "50%" }} align="center" margin="auto">
           <Box
-            width="500px"
-            margin={{ top: "190px" }}
+            style={{ minWidth: "450px" }}
+            margin={{ top: "100px" }}
             round="small"
             background="darkTwo"
           >
@@ -20,6 +18,16 @@ const Home = () => {
             </Box>
           </Box>
         </Box>
+        {size !== "small" && (
+          <Box
+            margin="auto"
+            align="center"
+            style={{ width: "50%" }}
+            margin={{ top: "80px" }}
+          >
+            <img src="/assets/team_login.svg" style={{ width: "100%" }} />
+          </Box>
+        )}
       </Box>
     </Box>
   );

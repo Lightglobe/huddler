@@ -102,9 +102,8 @@ export default class EventDashboard extends Component {
           size={this.props.size}
           showSidebar={this.props.showSidebar}
           setShowSidebar={this.props.setShowSidebar}
-        >
-          <EventForm />
-        </EventActivity>
+          content={this.props.sidebar}
+        />
       </Box>
     );
   }

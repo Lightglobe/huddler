@@ -11,7 +11,7 @@ import {
   Logout,
 } from "grommet-icons";
 
-const SignedIn = ({ children, ...attributes }) => {
+const SignedIn = ({ ...attributes }) => {
   const { history, signOut } = attributes;
   return (
     <Menu

@@ -25,13 +25,6 @@ const theme = {
       height: "18px",
     },
     drop: {
-      elevation: {
-        none: "none",
-        small: "none",
-        xsmall: "none",
-        medium: "none",
-        large: "none",
-      },
       shadowSize: {
         small: "0",
         medium: "0",
@@ -64,6 +57,14 @@ const theme = {
     },
     margin: "none",
   },
+  collapsible: {
+    extend: {
+      height: "100vh",
+      position: "sticky",
+      top: "0",
+    },
+    baseline: "100vh",
+  },
 };
 
 export default class App extends Component {
@@ -71,12 +72,14 @@ export default class App extends Component {
     super(props);
     this.state = {
       showSidebar: false,
+      sidebar: "",
     };
     this.setShowSidebar = this.setShowSidebar.bind(this);
   }
 
-  setShowSidebar = (show) => this.setState({ showSidebar: show });
-
+  setShowSidebar = (show, component) => {
+    this.setState({ showSidebar: show, sidebar: component });
+  };
   render() {
     const { showSidebar } = this.state;
     return (
@@ -89,7 +92,7 @@ export default class App extends Component {
                 showSidebar={showSidebar}
               />
               <Route exact path="/">
-                <Home />
+                <Home size={size} />
               </Route>
               <Route
                 path="/(.+)"
@@ -100,8 +103,10 @@ export default class App extends Component {
                         size={size}
                         showSidebar={this.state.showSidebar}
                         setShowSidebar={this.setShowSidebar}
+                        sidebar={this.state.sidebar}
                       />
                     </Route>
+
                     <Route path="/events/:id">
                       <EventDetails />
                     </Route>
