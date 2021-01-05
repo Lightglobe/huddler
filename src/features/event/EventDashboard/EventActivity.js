@@ -4,6 +4,10 @@ import { FormClose } from "grommet-icons";
 
 export default class EventActivity extends Component {
   render() {
+    const element = React.cloneElement(this.props.content, {
+      createEvent: this.props.createEvent,
+    });
+
     return (
       <React.Fragment>
         {!this.props.showSidebar || this.props.size !== "small" ? (
@@ -23,7 +27,7 @@ export default class EventActivity extends Component {
                 align="center"
                 fill="vertical"
               >
-                {this.props.content}
+                {element}
               </Box>
             </Box>
           </Collapsible>
@@ -43,8 +47,8 @@ export default class EventActivity extends Component {
                 }
               />
             </Box>
-            <Box fill background="light-2" align="center" justify="center">
-              Sidebar
+            <Box fill background="darkOne" align="center" justify="center">
+              {element}
             </Box>
           </Layer>
         )}

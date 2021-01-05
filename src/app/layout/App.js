@@ -18,6 +18,7 @@ const theme = {
       darkOne: "#1D1C2A",
       darkTwo: "#222232",
       darkThree: "#232334",
+      focus: "#232323",
     },
     font: {
       family: "Ubuntu",
@@ -80,6 +81,7 @@ export default class App extends Component {
   setShowSidebar = (show, component) => {
     this.setState({ showSidebar: show, sidebar: component });
   };
+
   render() {
     const { showSidebar } = this.state;
     return (

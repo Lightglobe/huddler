@@ -46,18 +46,30 @@ export default class Event extends Component {
           >
             <Text>{event.description}</Text>
           </Box>
-          <Box pad="medium" direction="row" background="darkThree" gap="medium">
-            <Box align="center" direction="row" gap="small">
-              {event.attendees.map((attendee) => (
-                <EventAttendee
-                  key={attendee.id}
-                  id={attendee.id}
-                  name={attendee.name}
-                  photoURL={attendee.photoURL}
-                />
-              ))}
+          {event.attendees && (
+            <Box
+              pad={{
+                left: "medium",
+                right: "medium",
+                top: "small",
+                bottom: "small",
+              }}
+              direction="row"
+              background="darkThree"
+              gap="medium"
+            >
+              <Box align="center" direction="row" gap="small">
+                {event.attendees.map((attendee) => (
+                  <EventAttendee
+                    key={attendee.id}
+                    id={attendee.id}
+                    name={attendee.name}
+                    photoURL={attendee.photoURL}
+                  />
+                ))}
+              </Box>
             </Box>
-          </Box>
+          )}
         </CardBody>
         <CardFooter pad="medium" background="darkTwo">
           <Box direction="row" align="center" gap="medium">

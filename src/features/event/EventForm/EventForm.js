@@ -10,7 +10,7 @@ import {
   DateInput,
   MaskedInput,
 } from "grommet";
-
+import { parse } from "date-fns";
 import { Clock } from "grommet-icons";
 
 const defaultValue = {
@@ -47,6 +47,14 @@ export default class EventForm extends Component {
           }}
           onSubmit={(event) => {
             console.log("Submit", event.value, event.touched);
+            const date = parse(
+              event.value.time,
+              "h:mm aa",
+              new Date(event.value.date)
+            );
+            event.value.date = date.toISOString();
+            // This is coupled with the dashboard
+            this.props.createEvent(event.value);
           }}
         >
           <Box margin={{ bottom: "small" }}>
@@ -95,7 +103,7 @@ export default class EventForm extends Component {
                 { fixed: " " },
                 {
                   length: 2,
-                  options: ["am", "pm"],
+                  options: ["a.m.", "p.m."],
                   regexp: /^[ap]m$|^[AP]M$|^[aApP]$/,
                   placeholder: "ap",
                 },

@@ -3,6 +3,7 @@ import { Box } from "grommet";
 import EventActivity from "./EventActivity";
 import EventList from "../EventList/EventList";
 import EventForm from "../EventForm/EventForm";
+import cuid from "cuid";
 
 const eventsData = [
   {
@@ -15,7 +16,7 @@ const eventsData = [
     city: "Limassol, Cyprus",
     venue: "My Mall of Limassol",
     hostedBy: "Bob",
-    hostPhotoURL: "http://placeimg.com/640/480/people",
+    hostPhotoURL: "/assets/user.png",
     attendees: [
       {
         id: "a",
@@ -63,7 +64,7 @@ const eventsData = [
     city: "Troodos, Limassol, Cyprus",
     venue: "Chionistra Restaurant",
     hostedBy: "Tom",
-    hostPhotoURL: "http://placeimg.com/640/480/people",
+    hostPhotoURL: "/assets/user.png",
     attendees: [
       {
         id: "a",
@@ -80,10 +81,24 @@ const eventsData = [
 ];
 
 export default class EventDashboard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleEventCreate = this.handleEventCreate.bind(this);
+  }
+
   state = {
     events: eventsData,
   };
 
+  handleEventCreate(newEvent) {
+    newEvent.id = cuid();
+    newEvent.hostPhotoURL = "/assets/user.png";
+    console.log(newEvent);
+    this.setState(({ events }) => ({
+      events: [...events, newEvent],
+    }));
+  }
   render() {
     const { events } = this.state;
 
@@ -103,6 +118,7 @@ export default class EventDashboard extends Component {
           showSidebar={this.props.showSidebar}
           setShowSidebar={this.props.setShowSidebar}
           content={this.props.sidebar}
+          createEvent={this.handleEventCreate}
         />
       </Box>
     );
