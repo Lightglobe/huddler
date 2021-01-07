@@ -1,24 +1,26 @@
 import React from "react";
-import { Box, Heading } from "grommet";
+import { Box } from "grommet";
+import { Route, Redirect } from "react-router-dom";
+import BasicPage from "./BasicPage";
+import SettingsNav from "./SettingsNav";
+import AboutPage from "./AboutPage";
+import PhotosPage from "./PhotosPage";
+import AccountPage from "./AccountPage";
+import { Switch } from "react-router-dom";
 const SettingsDashboard = () => {
   return (
-    <Box direction="row" height="100vh" background="darkOne">
-      <Box></Box>
-      <Box>
-        <Box
-          direction="column"
-          round="small"
-          pad="medium"
-          margin={{ top: "100px" }}
-          background="darkTwo"
-        >
-          <Heading level="4">User Settings</Heading>
-          <Box pad="small"> Basic Page</Box>
-          <Box pad="small">Account Page</Box>
-          <Box pad="small">Photos Page</Box>
-          <Box pad="small">Settings Page</Box>
-          <Box pad="small">Settings Nav</Box>
-        </Box>
+    <Box direction="row-responsive" height="100vh" background="darkOne">
+      <Box margin={{ top: "100px", left: "100px" }} width="70%">
+        <Switch>
+          <Redirect exact from="/settings" to="/settings/basic" />
+          <Route path="/settings/basic" component={BasicPage} />
+          <Route path="/settings/about" component={AboutPage} />
+          <Route path="/settings/photos" component={PhotosPage} />
+          <Route path="/settings/account" component={AccountPage} />
+        </Switch>
+      </Box>
+      <Box width="30%" margin={{ top: "100px" }}>
+        <SettingsNav />
       </Box>
     </Box>
   );

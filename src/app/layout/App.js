@@ -10,7 +10,7 @@ import UserDetails from "../../features/user/UserDetails/UserDetails";
 import SettingsDashboard from "../../features/user/Settings/SettingsDashboard";
 import EventForm from "../../features/event/EventForm/EventForm";
 import Home from "../../features/home/Home";
-
+import "./App.css";
 const theme = {
   global: {
     colors: {
@@ -49,6 +49,11 @@ const theme = {
     },
     content: {
       pad: "large",
+    },
+    touched: {
+      background: {
+        color: "white",
+      },
     },
     error: {
       background: {

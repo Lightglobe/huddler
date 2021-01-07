@@ -1,0 +1,54 @@
+a:visited {
+  color: white;
+  opacity: 50%;
+  transition: 0.3s;
+}
+a {
+  color: white;
+  opacity: 85%;
+  transition: 0.3s;
+}
+a:hover {
+  opacity: 100%;
+  text-decoration: none !important;
+}
+a:active {
+  opacity: 100%;
+}
+.border__gradient {
+  border: 2px solid linear-gradient(45deg, #9d1f76, #7ce3ff);
+  border-radius: 20px !important;
+  background-image: linear-gradient(transparent, transparent),
+    linear-gradient(45deg, #9d1f76, #7ce3ff);
+  background-origin: border-box;
+  background-clip: border-box;
+  opacity: 80%;
+  transition: 0.3s;
+}
+
+.button {
+  height: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  size: 25px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.button:hover {
+  opacity: 100%;
+}
+.link__text {
+  color: white !important;
+  text-decoration: none;
+}
+.button:hover {
+  background-color: linear-gradient(45deg, #9d1f76, #7ce3ff 100%) !important;
+}
+
+.icon {
+  height: 25px !important;
+}
