@@ -11,6 +11,7 @@ import SettingsDashboard from "../../features/user/Settings/SettingsDashboard";
 import EventForm from "../../features/event/EventForm/EventForm";
 import Home from "../../features/home/Home";
 import "./App.css";
+import TestComponent from "../../features/testarea/TestComponent";
 const theme = {
   global: {
     colors: {
@@ -128,6 +129,9 @@ export default class App extends Component {
                     </Route>
                     <Route path="/createEvent">
                       <EventForm />
+                    </Route>
+                    <Route path="/test">
+                      <TestComponent />
                     </Route>
                   </>
                 )}
