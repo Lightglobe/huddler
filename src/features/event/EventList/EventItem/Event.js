@@ -81,7 +81,7 @@ export default class Event extends Component {
               <Location /> <Text>{event.city}</Text>
             </Box>
           </Box>
-          <Link className="link__text">
+          <Link className="link__text" exact to={`/events/${event.id}`}>
             <div className="border__gradient button">
               <span>View</span>
             </div>

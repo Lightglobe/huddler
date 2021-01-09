@@ -106,7 +106,7 @@ export default class App extends Component {
                 path="/(.+)"
                 render={() => (
                   <>
-                    <Route path="/events">
+                    <Route exact path="/events">
                       <EventDashboard
                         size={size}
                         showSidebar={this.state.showSidebar}

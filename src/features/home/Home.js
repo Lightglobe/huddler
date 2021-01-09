@@ -21,7 +21,7 @@ const Home = ({ size }) => {
         {size !== "small" && (
           <Box align="center" style={{ width: "50%" }} margin={{ top: "80px" }}>
             <img
-              src="/assets/team_login.svg"
+              src="/assets/vector-creator.svg"
               style={{ width: "100%" }}
               alt="hero"
             />
