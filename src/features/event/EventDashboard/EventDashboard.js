@@ -2,94 +2,19 @@ import React, { Component } from "react";
 import { Box } from "grommet";
 import EventActivity from "./EventActivity";
 import EventList from "../EventList/EventList";
-import EventForm from "../EventForm/EventForm";
 import cuid from "cuid";
+import { connect } from "react-redux";
 
-const eventsData = [
-  {
-    id: "1",
-    title: "Trip to Limassol",
-    date: "2021-01-23T10:00:00+00:00",
-    category: "Food",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    city: "Limassol, Cyprus",
-    venue: "My Mall of Limassol",
-    hostedBy: "Bob",
-    hostPhotoURL: "/assets/user.png",
-    attendees: [
-      {
-        id: "a",
-        name: "Bob",
-        photoURL: "http://placeimg.com/640/480/people",
-      },
-      {
-        id: "b",
-        name: "Tom",
-        photoURL: "http://placeimg.com/640/480/people",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "Trip to Troodos",
-    date: "2021-01-02T10:00:00+00:00",
-    category: "culture",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    city: "Troodos, Limassol, Cyprus",
-    venue: "Chionistra Restaurant",
-    hostedBy: "Tom",
-    hostPhotoURL: "http://placeimg.com/640/480/people",
-    attendees: [
-      {
-        id: "a",
-        name: "Bob",
-        photoURL: "http://placeimg.com/640/480/people",
-      },
-      {
-        id: "b",
-        name: "Tom",
-        photoURL: "http://placeimg.com/640/480/people",
-      },
-    ],
-  },
-  {
-    id: "3",
-    title: "Trip to Troodos",
-    date: "2021-01-02T10:00:00+00:00",
-    category: "culture",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    city: "Troodos, Limassol, Cyprus",
-    venue: "Chionistra Restaurant",
-    hostedBy: "Tom",
-    hostPhotoURL: "/assets/user.png",
-    attendees: [
-      {
-        id: "a",
-        name: "Bob",
-        photoURL: "http://placeimg.com/640/480/people",
-      },
-      {
-        id: "b",
-        name: "Tom",
-        photoURL: "http://placeimg.com/640/480/people",
-      },
-    ],
-  },
-];
+const mapStateToProps = (state) => ({
+  events: state.events,
+});
 
-export default class EventDashboard extends Component {
+class EventDashboard extends Component {
   constructor(props) {
     super(props);
 
     this.handleEventCreate = this.handleEventCreate.bind(this);
   }
-
-  state = {
-    events: eventsData,
-  };
 
   handleEventCreate(newEvent) {
     newEvent.id = cuid();
@@ -100,7 +25,7 @@ export default class EventDashboard extends Component {
     }));
   }
   render() {
-    const { events } = this.state;
+    const { events } = this.props;
 
     return (
       <Box direction="row" background="darkOne">
@@ -124,3 +49,5 @@ export default class EventDashboard extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(EventDashboard);
