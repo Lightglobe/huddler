@@ -8,12 +8,11 @@ import {
   Avatar,
   Box,
   Text,
-  Button,
 } from "grommet";
 import { format } from "date-fns";
 import { Clock, Location } from "grommet-icons";
 import EventAttendee from "../EventAttendee/EventAttendee";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 export default class Event extends Component {
   render() {
     const event = this.props.event;
@@ -81,11 +80,11 @@ export default class Event extends Component {
               <Location /> <Text>{event.city}</Text>
             </Box>
           </Box>
-          <Link className="link__text" exact to={`/events/${event.id}`}>
+          <NavLink className="link__text" to={`/events/${event.id}`}>
             <div className="border__gradient button">
               <span>View</span>
             </div>
-          </Link>
+          </NavLink>
         </CardFooter>
       </Card>
     );

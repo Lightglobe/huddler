@@ -115,7 +115,7 @@ export default class App extends Component {
                       />
                     </Route>
 
-                    <Route path="/events/:id">
+                    <Route exact path="/events/:id">
                       <EventDetails />
                     </Route>
                     <Route path="/people">
