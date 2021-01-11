@@ -4,6 +4,7 @@ import EventActivity from "./EventActivity";
 import EventList from "../EventList/EventList";
 import cuid from "cuid";
 import { connect } from "react-redux";
+import EventForm from "../EventForm/EventForm";
 
 const mapStateToProps = (state) => ({
   events: state.events,
@@ -41,7 +42,7 @@ class EventDashboard extends Component {
         <EventActivity
           size={this.props.size}
           showSidebar={this.props.showSidebar}
-          setShowSidebar={this.props.setShowSidebar}
+          setShowSidebar={(this.props.setShowSidebar, (<EventForm />))}
           content={this.props.sidebar}
           createEvent={this.handleEventCreate}
         />

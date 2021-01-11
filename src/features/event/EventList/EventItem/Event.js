@@ -73,8 +73,7 @@ export default class Event extends Component {
         <CardFooter pad="medium" background="darkTwo">
           <Box direction="row" align="center" gap="medium">
             <Box direction="row" gap="xxsmall">
-              <Clock />{" "}
-              <Text>{format(new Date(event.date), "dd/MM/yyyy HH:mm")}</Text>
+              <Clock /> <Text>{event.date}</Text>
             </Box>
             <Box direction="row" gap="xxsmall">
               <Location /> <Text>{event.city}</Text>

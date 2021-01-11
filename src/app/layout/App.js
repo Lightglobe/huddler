@@ -116,7 +116,12 @@ export default class App extends Component {
                     </Route>
 
                     <Route exact path="/events/:id">
-                      <EventDetails />
+                      <EventDetails
+                        size={size}
+                        showSidebar={this.state.showSidebar}
+                        setShowSidebar={this.setShowSidebar}
+                        sidebar={this.state.sidebar}
+                      />
                     </Route>
                     <Route path="/people">
                       <PeopleDashboard />

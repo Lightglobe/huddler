@@ -11,8 +11,16 @@ import {
   Image,
 } from "grommet";
 import { Sign } from "grommet-icons";
+import EventForm from "../EventForm/EventForm";
 
-const EventDetailsHeader = ({ title, category, hostedBy, hostPhotoURL }) => {
+const EventDetailsHeader = ({
+  title,
+  category,
+  hostedBy,
+  hostPhotoURL,
+  setShowSidebar,
+  showSidebar,
+}) => {
   return (
     <Stack anchor="bottom-left" width="850px">
       <CardBody>
@@ -40,10 +48,7 @@ const EventDetailsHeader = ({ title, category, hostedBy, hostPhotoURL }) => {
           </Box>
         </Box>
         <Box direction="row" gap="small">
-          <Anchor
-            className="link__text"
-            onClick={() => console.log("Joined event")}
-          >
+          <Anchor className="link__text" onClick={() => console.log(category)}>
             <div
               className="border__gradient button"
               style={{ background: "#ff6961" }}
@@ -55,15 +60,21 @@ const EventDetailsHeader = ({ title, category, hostedBy, hostPhotoURL }) => {
           </Anchor>
           <Anchor
             className="link__text"
-            onClick={() => console.log("Joined event")}
+            onClick={() => setShowSidebar(!showSidebar, <EventForm />)}
           >
             <div
               className="border__gradient button"
               style={{ background: "#98e690" }}
             >
-              <Text size="small" margin={{ left: "5px" }} weight="bold">
-                Edit
-              </Text>
+              {showSidebar ? (
+                <Text size="small" margin={{ left: "5px" }} weight="bold">
+                  Cancel Edit
+                </Text>
+              ) : (
+                <Text size="small" margin={{ left: "5px" }} weight="bold">
+                  Edit
+                </Text>
+              )}
             </div>
           </Anchor>
           <Anchor

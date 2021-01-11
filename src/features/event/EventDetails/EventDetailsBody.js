@@ -16,7 +16,7 @@ const EventDetailsBody = ({ date, location, description, attendees }) => {
       <Box direction="column" gap="medium" pad="medium">
         <Box gap="medium" direction="row" justify="start">
           <Calendar />
-          <Text>{format(new Date(date), "dd/MM/yyyy HH:mm")}</Text>
+          <Text>{date}</Text>
         </Box>
 
         <Box gap="medium" direction="row" justify="start">
@@ -27,18 +27,20 @@ const EventDetailsBody = ({ date, location, description, attendees }) => {
           <CircleInformation />
           <Text>{description}</Text>
         </Box>
-        <Box gap="medium" direction="row" justify="start">
-          <Cluster />
-          <Text>
-            <Anchor
-              color="brand"
-              disabled={attendees.length === 0}
-              onClick={() => setShowAttendance(true)}
-            >
-              {attendees.length} People Going
-            </Anchor>
-          </Text>
-        </Box>
+        {attendees && (
+          <Box gap="medium" direction="row" justify="start">
+            <Cluster />
+            <Text>
+              <Anchor
+                color="brand"
+                disabled={attendees.length === 0}
+                onClick={() => setShowAttendance(true)}
+              >
+                {attendees.length} People Going
+              </Anchor>
+            </Text>
+          </Box>
+        )}
       </Box>
       {showAttendance && (
         <Layer>

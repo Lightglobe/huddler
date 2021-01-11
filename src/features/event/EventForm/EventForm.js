@@ -10,8 +10,12 @@ import {
   DateInput,
   MaskedInput,
 } from "grommet";
+import { withRouter } from "react-router";
 import { parse } from "date-fns";
 import { Clock } from "grommet-icons";
+import { connect } from "react-redux";
+import { createEvent, updateEvent } from "../eventActions";
+import cuid from "cuid";
 
 const defaultValue = {
   title: "",
@@ -22,9 +26,48 @@ const defaultValue = {
   date: "",
   time: "",
 };
-export default class EventForm extends Component {
-  state = { value: defaultValue, open: false };
+
+const mapStateToProps = (state, ownProps) => {
+  const eventId = ownProps.match.params.id;
+  let event = defaultValue;
+  if (eventId && state.events.length > 0) {
+    event = state.events.filter((event) => event.id === eventId)[0];
+  }
+  return {
+    event,
+  };
+};
+
+const actions = {
+  createEvent,
+  updateEvent,
+};
+
+class EventForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: this.props.event };
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.setValue = this.setValue.bind(this);
+  }
+
   setValue = (value) => this.setState({ value: value });
+
+  handleFormSubmit(e) {
+    e.preventDefault();
+    console.log(this.state);
+    if (this.state.value.id) {
+      this.props.updateEvent(this.state.value);
+    } else {
+      const newEvent = {
+        ...this.state.value,
+        id: cuid(),
+        hostPhotoURL: "/assets/user.png",
+      };
+      this.props.createEvent(newEvent);
+    }
+  }
+
   render() {
     return (
       <Box margin="auto" pad={{ top: "70px" }}>
@@ -39,22 +82,21 @@ export default class EventForm extends Component {
         <Form
           value={this.state.value}
           onChange={(nextValue, { touched }) => {
-            console.log("Change", nextValue, touched);
+            // console.log("Change", nextValue, touched);
             this.setValue(nextValue);
           }}
           onReset={() => {
             this.setValue(defaultValue);
           }}
           onSubmit={(event) => {
-            console.log("Submit", event.value, event.touched);
+            //console.log("Submit", event.value, event.touched);
             const date = parse(
               event.value.time,
               "h:mm aa",
               new Date(event.value.date)
             );
-            event.value.date = date.toISOString();
-            // This is coupled with the dashboard
-            this.props.createEvent(event.value);
+            event.value.date = date.toUTCString();
+            this.handleFormSubmit(event);
           }}
         >
           <Box margin={{ bottom: "small" }}>
@@ -63,6 +105,7 @@ export default class EventForm extends Component {
 
           <Box margin={{ bottom: "small" }}>
             <Select
+              value={this.state.category}
               name="category"
               options={["drinks", "food", "culture"]}
               placeholder="Category"
@@ -130,3 +173,5 @@ export default class EventForm extends Component {
     );
   }
 }
+
+export default withRouter(connect(mapStateToProps, actions)(EventForm));

@@ -6,6 +6,9 @@ import EventDetailsBody from "./EventDetailsBody";
 import EventDetailsChat from "./EventDetailsChat";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import EventActivity from "../EventDashboard/EventActivity";
+import EventForm from "../EventForm/EventForm";
+
 const mapStateToPros = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
   let event = {};
@@ -19,20 +22,31 @@ const mapStateToPros = (state, ownProps) => {
   };
 };
 
-const EventDetails = ({ event }) => {
+const EventDetails = ({
+  event,
+  size,
+  showSidebar,
+  sidebar,
+  setShowSidebar,
+}) => {
   return (
-    <Box background="darkOne">
+    <Box direction="row" background="darkOne">
       <Box
         direction="row"
-        margin={{ top: "100px", left: "100px", right: "100px" }}
+        flex
+        justify="center"
+        pad={{ bottom: "large" }}
+        margin={{ top: "100px" }}
       >
-        <Box style={{ width: "850px", margin: "auto" }}>
+        <Box style={{ width: "850px" }}>
           <Card elevation="none" background="darkTwo">
             <EventDetailsHeader
               title={event.title}
               category={event.category}
               hostedBy={event.hostedBy}
               hostPhotoURL={event.hostPhotoURL}
+              setShowSidebar={setShowSidebar}
+              showSidebar={showSidebar}
             />
             <EventDetailsBody
               date={event.date}
@@ -45,6 +59,12 @@ const EventDetails = ({ event }) => {
           </Card>
         </Box>
       </Box>
+      <EventActivity
+        size={size}
+        showSidebar={showSidebar}
+        setShowSidebar={(setShowSidebar, (<EventForm />))}
+        content={sidebar}
+      />
     </Box>
   );
 };
