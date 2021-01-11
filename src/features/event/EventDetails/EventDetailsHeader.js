@@ -14,7 +14,7 @@ import { Sign } from "grommet-icons";
 
 const EventDetailsHeader = ({ title, category, hostedBy, hostPhotoURL }) => {
   return (
-    <Stack anchor="bottom-left">
+    <Stack anchor="bottom-left" width="850px">
       <CardBody>
         <Image
           src="/assets/event-placeholder/troodos.png"
@@ -26,9 +26,9 @@ const EventDetailsHeader = ({ title, category, hostedBy, hostPhotoURL }) => {
       </CardBody>
       <CardHeader
         pad={{ horizontal: "medium", vertical: "small" }}
-        background="#1D1C2AA0"
         justify="between"
-        width="850px"
+        width="large"
+        background="#1D1C2AA0"
       >
         <Box direction="row" gap="small">
           <Avatar src={hostPhotoURL} a11yTitle="avatar" />

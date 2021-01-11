@@ -9,9 +9,9 @@ export default class Nav extends Component {
         direction="row"
         align="center"
         justify="between"
+        elevation="small"
         background="darkTwo"
         pad={{ left: "xlarge", right: "small", vertical: "small" }}
-        elevation="medium"
         style={{ zIndex: "1", position: "fixed", width: "100%", top: "0" }}
         {...this.props}
       />

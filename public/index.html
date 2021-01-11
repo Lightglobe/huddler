@@ -30,12 +30,16 @@
     />
     <title>Huddler</title>
     <style type="text/css">
-      html {
+      html,
+      body {
+        height: 100vh;
+        overflow: auto;
         overscroll-behavior: none;
       }
       body {
         margin: 0;
-        overscroll-behavior: none;
+        overflow-x: hidden;
+        position: fixed;
       }
     </style>
   </head>

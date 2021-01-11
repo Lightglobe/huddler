@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 const mapStateToPros = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
-  console.log(ownProps, "hello");
   let event = {};
 
   if (eventId && state.events.length > 0) {
