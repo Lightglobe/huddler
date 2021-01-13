@@ -30,7 +30,7 @@ const initialState = [
     id: "2",
     title: "Trip to Troodos",
     date: "2021-01-02T10:00:00+00:00",
-    category: "culture",
+    category: "Culture",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     city: "Troodos, Limassol, Cyprus",
@@ -54,7 +54,7 @@ const initialState = [
     id: "3",
     title: "Trip to Troodos",
     date: "2021-01-02T10:00:00+00:00",
-    category: "culture",
+    category: "Culture",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     city: "Troodos, Limassol, Cyprus",

@@ -12,15 +12,13 @@ console.log(store.getState());
 
 let render = () => {
   ReactDOM.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <BrowserRouter>
-          <ScrollToTop>
-            <App />
-          </ScrollToTop>
-        </BrowserRouter>
-      </Provider>
-    </React.StrictMode>,
+    <Provider store={store}>
+      <BrowserRouter>
+        <ScrollToTop>
+          <App />
+        </ScrollToTop>
+      </BrowserRouter>
+    </Provider>,
     document.getElementById("root")
   );
 };

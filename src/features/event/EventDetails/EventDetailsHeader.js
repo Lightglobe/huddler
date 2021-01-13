@@ -20,9 +20,10 @@ const EventDetailsHeader = ({
   hostPhotoURL,
   setShowSidebar,
   showSidebar,
+  size,
 }) => {
   return (
-    <Stack anchor="bottom-left" width="850px">
+    <Stack anchor="bottom-left" flex>
       <CardBody>
         <Image
           src="/assets/event-placeholder/troodos.png"
@@ -33,9 +34,9 @@ const EventDetailsHeader = ({
         />
       </CardBody>
       <CardHeader
-        pad={{ horizontal: "medium", vertical: "small" }}
+        pad={{ top: "small", bottom: "small", left: "medium", right: "medium" }}
         justify="between"
-        width="large"
+        width="xlarge"
         background="#1D1C2AA0"
       >
         <Box direction="row" gap="small">
@@ -47,7 +48,11 @@ const EventDetailsHeader = ({
             <Text size="small">Hosted by {hostedBy}</Text>
           </Box>
         </Box>
-        <Box direction="row" gap="small">
+        <Box
+          direction="row"
+          gap="small"
+          margin={{ right: size === "small" ? "550px" : "300px" }}
+        >
           <Anchor className="link__text" onClick={() => console.log(category)}>
             <div
               className="border__gradient button"

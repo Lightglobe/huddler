@@ -33,10 +33,10 @@ const EventDetails = ({
     <Box direction="row" background="darkOne">
       <Box
         direction="row"
-        flex
         justify="center"
         pad={{ bottom: "large" }}
         margin={{ top: "100px" }}
+        flex
       >
         <Box style={{ width: "850px" }}>
           <Card elevation="none" background="darkTwo">
@@ -47,6 +47,7 @@ const EventDetails = ({
               hostPhotoURL={event.hostPhotoURL}
               setShowSidebar={setShowSidebar}
               showSidebar={showSidebar}
+              size={size}
             />
             <EventDetailsBody
               date={event.date}

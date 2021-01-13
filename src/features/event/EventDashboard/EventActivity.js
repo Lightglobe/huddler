@@ -26,6 +26,7 @@ export default class EventActivity extends Component {
                 margin={{ bottom: "medium" }}
                 align="center"
                 fill="vertical"
+                style={{ overflow: "auto" }}
               >
                 {element}
               </Box>

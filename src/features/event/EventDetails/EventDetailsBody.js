@@ -8,9 +8,11 @@ import {
   FormClose,
 } from "grommet-icons";
 import { format } from "date-fns";
+import MapComponent from "../EventMap/MapComponent";
 
 const EventDetailsBody = ({ date, location, description, attendees }) => {
   const [showAttendance, setShowAttendance] = useState(false);
+  const [showMap, setShowMap] = useState(false);
   return (
     <>
       <Box direction="column" gap="medium" pad="medium">
@@ -21,7 +23,11 @@ const EventDetailsBody = ({ date, location, description, attendees }) => {
 
         <Box gap="medium" direction="row" justify="start">
           <Location />
-          <Text>{location}</Text>
+          <Text>
+            <Anchor color="brand" onClick={() => setShowMap(true)}>
+              {location}
+            </Anchor>
+          </Text>
         </Box>
         <Box gap="medium" direction="row" justify="start">
           <CircleInformation />
@@ -79,6 +85,25 @@ const EventDetailsBody = ({ date, location, description, attendees }) => {
                 </Button>
               </Box>
             ))}
+          </Box>
+        </Layer>
+      )}
+      {showMap && (
+        <Layer>
+          <Box
+            background="darkTwo"
+            align="center"
+            direction="row"
+            justify="end"
+            width="xlarge"
+          >
+            <Button
+              icon={<FormClose size="large" />}
+              onClick={() => setShowMap(false)}
+            />
+          </Box>
+          <Box fill background="darkOne">
+            <MapComponent />
           </Box>
         </Layer>
       )}

@@ -11,20 +11,6 @@ const mapStateToProps = (state) => ({
 });
 
 class EventDashboard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleEventCreate = this.handleEventCreate.bind(this);
-  }
-
-  handleEventCreate(newEvent) {
-    newEvent.id = cuid();
-    newEvent.hostPhotoURL = "/assets/user.png";
-    console.log(newEvent);
-    this.setState(({ events }) => ({
-      events: [...events, newEvent],
-    }));
-  }
   render() {
     const { events } = this.props;
 
@@ -44,7 +30,6 @@ class EventDashboard extends Component {
           showSidebar={this.props.showSidebar}
           setShowSidebar={(this.props.setShowSidebar, (<EventForm />))}
           content={this.props.sidebar}
-          createEvent={this.handleEventCreate}
         />
       </Box>
     );

@@ -28,9 +28,9 @@ const theme = {
     },
     drop: {
       shadowSize: {
-        small: "0",
-        medium: "0",
-        large: "0",
+        small: "0px",
+        medium: "0px",
+        large: "0px",
       },
     },
   },
@@ -63,6 +63,10 @@ const theme = {
       },
     },
     margin: "none",
+    border: {
+      side: "none",
+      position: "none",
+    },
   },
   collapsible: {
     extend: {

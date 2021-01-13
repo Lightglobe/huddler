@@ -2,7 +2,8 @@ import { Button } from "grommet";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { increamentCounter, decreamentCounter } from "./testActions";
-
+import MapComponent from "../event/EventMap/MapComponent";
+import TestForm from "./TestForm";
 const mapStateToProps = (state) => ({
   data: state.test.data,
 });
@@ -22,6 +23,7 @@ class TestComponent extends Component {
         <Button primary label="+1" onClick={increamentCounter} />
 
         <Button primary onClick={decreamentCounter} label="-1" />
+        <TestForm />
       </div>
     );
   }

@@ -9,13 +9,16 @@ import {
   TextArea,
   DateInput,
   MaskedInput,
+  FormField,
 } from "grommet";
+
 import { withRouter } from "react-router";
 import { parse } from "date-fns";
 import { Clock } from "grommet-icons";
 import { connect } from "react-redux";
 import { createEvent, updateEvent } from "../eventActions";
 import cuid from "cuid";
+import { reduxForm, Field } from "redux-form";
 
 const defaultValue = {
   title: "",
@@ -43,6 +46,127 @@ const actions = {
   updateEvent,
 };
 
+const validate = (values) => {
+  const errors = {};
+  const requiredFields = [
+    "title",
+    "category",
+    "city",
+    "venue",
+    "date",
+    "time",
+    "description",
+  ];
+  requiredFields.forEach((field) => {
+    if (!values[field]) {
+      errors[field] = "Required";
+    }
+  });
+  if (values.title && values.title.length > 50)
+    errors.title = "No more than 50 characters";
+  if (values["description"] && values["description"].length > 400) {
+    errors.category = "No more than 400 characters";
+  }
+  return errors;
+};
+
+const renderInputFormField = ({
+  value,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => {
+  return (
+    <FormField border round="xsmall" error={touched && error} {...custom}>
+      <TextInput {...input} {...custom} value={value} />
+    </FormField>
+  );
+};
+
+const renderSelectFormField = ({
+  value,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => {
+  return (
+    <FormField border round="xsmall" error={touched && error} {...custom}>
+      <Select {...custom} {...input} value={value} />
+    </FormField>
+  );
+};
+
+const renderDateInputField = ({
+  value,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => {
+  console.log(input);
+  return (
+    <FormField border round="xsmall" {...custom} error={touched && error}>
+      <DateInput {...custom} {...input} value={value} format="dd/mm/yyyy" />
+    </FormField>
+  );
+};
+
+const renderMaskedInputField = ({
+  value,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => (
+  <FormField {...custom} error={touched && error}>
+    <Box direction="row" border round="xsmall" align="center">
+      <MaskedInput
+        error={touched && error}
+        required
+        plain
+        mask={[
+          {
+            length: [1, 2],
+            options: Array.from({ length: 12 }, (v, k) => k + 1),
+            regexp: /^1[0,1-2]$|^0?[1-9]$|^0$/,
+            placeholder: "hh",
+          },
+          { fixed: ":" },
+          {
+            length: 2,
+            options: ["00", "15", "30", "45"],
+            regexp: /^[0-5][0-9]$|^[0-9]$/,
+            placeholder: "mm",
+          },
+          { fixed: " " },
+          {
+            length: 2,
+            options: ["a.m.", "p.m."],
+            regexp: /^[ap]m$|^[AP]M$|^[aApP]$/,
+            placeholder: "ap",
+          },
+        ]}
+        value={value}
+        name="time"
+      />
+      <Box pad={{ right: "15px" }}>
+        <Clock />
+      </Box>
+    </Box>
+  </FormField>
+);
+
+const renderTextAreaField = ({
+  value,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => {
+  console.log(input);
+  return (
+    <FormField border round="xsmall" {...custom} error={touched && error}>
+      <TextArea {...custom} {...input} value={value} />
+    </FormField>
+  );
+};
 class EventForm extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +193,7 @@ class EventForm extends Component {
   }
 
   render() {
+    const { pristine, submitting, error } = this.props;
     return (
       <Box margin="auto" pad={{ top: "70px" }}>
         <Text
@@ -80,6 +205,7 @@ class EventForm extends Component {
           Create event
         </Text>
         <Form
+          validate="submit"
           value={this.state.value}
           onChange={(nextValue, { touched }) => {
             // console.log("Change", nextValue, touched);
@@ -100,73 +226,73 @@ class EventForm extends Component {
           }}
         >
           <Box margin={{ bottom: "small" }}>
-            <TextInput name="title" placeholder="Title" />
+            <Field
+              component={renderInputFormField}
+              placeholder="Title"
+              value={this.state.title}
+              name="title"
+            />
           </Box>
 
           <Box margin={{ bottom: "small" }}>
-            <Select
+            <Field
+              component={renderSelectFormField}
               value={this.state.category}
               name="category"
-              options={["drinks", "food", "culture"]}
+              options={["Drinks", "Food", "Culture"]}
               placeholder="Category"
             />
           </Box>
+
           <Box margin={{ bottom: "small" }}>
-            <TextInput name="city" placeholder="City" />
+            <Field
+              component={renderInputFormField}
+              placeholder="City"
+              value={this.state.city}
+              name="city"
+            />
+          </Box>
+
+          <Box margin={{ bottom: "small" }}>
+            <Field
+              component={renderInputFormField}
+              placeholder="Venue"
+              value={this.state.venue}
+              name="venue"
+            />
           </Box>
           <Box margin={{ bottom: "small" }}>
-            <TextInput name="venue" placeholder="Venue" />
+            <Field
+              component={renderDateInputField}
+              value={this.state.date}
+              name="date"
+            />
           </Box>
           <Box margin={{ bottom: "small" }}>
-            <DateInput name="date" format="dd/mm/yyyy" />
-          </Box>
-          <Box
-            direction="row"
-            border
-            round="xxsmall"
-            align="center"
-            margin={{ bottom: "small" }}
-          >
-            <MaskedInput
-              plain
-              mask={[
-                {
-                  length: [1, 2],
-                  options: Array.from({ length: 12 }, (v, k) => k + 1),
-                  regexp: /^1[0,1-2]$|^0?[1-9]$|^0$/,
-                  placeholder: "hh",
-                },
-                { fixed: ":" },
-                {
-                  length: 2,
-                  options: ["00", "15", "30", "45"],
-                  regexp: /^[0-5][0-9]$|^[0-9]$/,
-                  placeholder: "mm",
-                },
-                { fixed: " " },
-                {
-                  length: 2,
-                  options: ["a.m.", "p.m."],
-                  regexp: /^[ap]m$|^[AP]M$|^[aApP]$/,
-                  placeholder: "ap",
-                },
-              ]}
+            <Field
+              component={renderMaskedInputField}
+              value={this.state.time}
               name="time"
             />
-            <Box pad={{ right: "15px" }}>
-              <Clock />
-            </Box>
           </Box>
           <Box margin={{ bottom: "small" }}>
-            <TextArea
+            <Field
+              component={renderTextAreaField}
+              placeholder="Description"
               rows="5"
               resize={false}
+              value={this.state.description}
               name="description"
-              placeholder="Description"
             />
           </Box>
+
           <Box direction="row" justify="end" margin={{ top: "medium" }}>
-            <Button type="submit" label="Submit" color="brand" />
+            <Button
+              type="submit"
+              label="Submit"
+              color="brand"
+              disabled={error || pristine || submitting}
+            />
           </Box>
         </Form>
       </Box>
@@ -174,4 +300,8 @@ class EventForm extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, actions)(EventForm));
+export default withRouter(
+  reduxForm({ form: "eventForm", validate })(
+    connect(mapStateToProps, actions)(EventForm)
+  )
+);
