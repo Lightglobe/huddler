@@ -9,7 +9,8 @@ import {
   Box,
   Text,
 } from "grommet";
-import { format } from "date-fns";
+
+import moment from "moment";
 import { Clock, Location } from "grommet-icons";
 import EventAttendee from "../EventAttendee/EventAttendee";
 import { NavLink } from "react-router-dom";
@@ -73,7 +74,10 @@ export default class Event extends Component {
         <CardFooter pad="medium" background="darkTwo">
           <Box direction="row" align="center" gap="medium">
             <Box direction="row" gap="xxsmall">
-              <Clock /> <Text>{event.date}</Text>
+              <Clock />{" "}
+              <Text>
+                {moment(new Date(event.date)).format("DD-MM-YYYY HH:mm")}
+              </Text>
             </Box>
             <Box direction="row" gap="xxsmall">
               <Location /> <Text>{event.city}</Text>

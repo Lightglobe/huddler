@@ -19,11 +19,13 @@ import { connect } from "react-redux";
 import { createEvent, updateEvent } from "../eventActions";
 import cuid from "cuid";
 import { reduxForm, Field } from "redux-form";
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 
 const defaultValue = {
   title: "",
   description: "",
   category: "",
+  location: "",
   city: "",
   venue: "",
   date: "",
@@ -52,6 +54,7 @@ const validate = (values) => {
     "title",
     "category",
     "city",
+    "location",
     "venue",
     "date",
     "time",
@@ -77,8 +80,29 @@ const renderInputFormField = ({
   ...custom
 }) => {
   return (
-    <FormField border round="xsmall" error={touched && error} {...custom}>
+    <FormField border round="xsmall" error={touched && !!error} {...custom}>
       <TextInput {...input} {...custom} value={value} />
+    </FormField>
+  );
+};
+
+const renderInputSuggestionFormField = ({
+  fetch,
+  suggestions,
+  value,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => {
+  return (
+    <FormField border round="xsmall" error={touched && error} {...custom}>
+      <TextInput
+        {...input}
+        {...custom}
+        value={value}
+        onChange={fetch}
+        suggestions={suggestions}
+      />
     </FormField>
   );
 };
@@ -102,7 +126,6 @@ const renderDateInputField = ({
   meta: { touched, invalid, error },
   ...custom
 }) => {
-  console.log(input);
   return (
     <FormField border round="xsmall" {...custom} error={touched && error}>
       <DateInput {...custom} {...input} value={value} format="dd/mm/yyyy" />
@@ -160,7 +183,6 @@ const renderTextAreaField = ({
   meta: { touched, invalid, error },
   ...custom
 }) => {
-  console.log(input);
   return (
     <FormField border round="xsmall" {...custom} error={touched && error}>
       <TextArea {...custom} {...input} value={value} />
@@ -170,12 +192,45 @@ const renderTextAreaField = ({
 class EventForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: this.props.event };
+    this.state = {
+      value: this.props.event,
+      geocoder: null,
+      suggestionList: Array(0).fill("", 0, 0, ""),
+    };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.setValue = this.setValue.bind(this);
+    this.fetchSuggestions = this.fetchSuggestions.bind(this);
   }
 
   setValue = (value) => this.setState({ value: value });
+
+  componentDidMount() {
+    const options = {
+      accessToken: process.env.REACT_APP_MAPGL_TOKEN,
+      types: "address",
+      localGeocoder: this.forwardGeocoder,
+    };
+    const geocodingClient = mbxGeocoding(options);
+    this.setState({ geocoder: geocodingClient });
+  }
+
+  fetchSuggestions() {
+    this.state.geocoder
+      .forwardGeocode({ query: this.state.value.location, limit: 2 })
+      .send()
+      .then((response) => {
+        const match = response.body;
+        //console.log(match);
+        this.setState({ suggestionList: match.features });
+      });
+  }
+
+  renderSuggestions() {
+    return this.state.suggestionList.map(({ place_name }, index, list) => ({
+      label: place_name,
+      value: place_name,
+    }));
+  }
 
   handleFormSubmit(e) {
     e.preventDefault();
@@ -193,7 +248,8 @@ class EventForm extends Component {
   }
 
   render() {
-    const { pristine, submitting, error } = this.props;
+    const { submitting, error } = this.props;
+
     return (
       <Box margin="auto" pad={{ top: "70px" }}>
         <Text
@@ -221,7 +277,8 @@ class EventForm extends Component {
               "h:mm aa",
               new Date(event.value.date)
             );
-            event.value.date = date.toUTCString();
+            event.value.date = new Date(date);
+
             this.handleFormSubmit(event);
           }}
         >
@@ -241,6 +298,16 @@ class EventForm extends Component {
               name="category"
               options={["Drinks", "Food", "Culture"]}
               placeholder="Category"
+            />
+          </Box>
+          <Box margin={{ bottom: "small" }}>
+            <Field
+              component={renderInputSuggestionFormField}
+              placeholder="Location"
+              fetch={this.fetchSuggestions}
+              suggestions={this.renderSuggestions()}
+              value={this.state.location}
+              name="location"
             />
           </Box>
 
@@ -291,7 +358,7 @@ class EventForm extends Component {
               type="submit"
               label="Submit"
               color="brand"
-              disabled={error || pristine || submitting}
+              disabled={error || submitting}
             />
           </Box>
         </Form>

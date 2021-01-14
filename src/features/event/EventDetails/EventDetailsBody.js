@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Text, Anchor, Layer, Button, Heading, Avatar } from "grommet";
+import { Box, Text, Anchor, Layer, Button, Avatar } from "grommet";
 import {
   CircleInformation,
   Calendar,
@@ -7,7 +7,7 @@ import {
   Cluster,
   FormClose,
 } from "grommet-icons";
-import { format } from "date-fns";
+import moment from "moment";
 import MapComponent from "../EventMap/MapComponent";
 
 const EventDetailsBody = ({ date, location, description, attendees }) => {
@@ -18,7 +18,7 @@ const EventDetailsBody = ({ date, location, description, attendees }) => {
       <Box direction="column" gap="medium" pad="medium">
         <Box gap="medium" direction="row" justify="start">
           <Calendar />
-          <Text>{date}</Text>
+          <Text>{moment(new Date(date)).format("DD-MM-YYYY HH:mm")}</Text>
         </Box>
 
         <Box gap="medium" direction="row" justify="start">
