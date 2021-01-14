@@ -215,21 +215,29 @@ class EventForm extends Component {
   }
 
   fetchSuggestions() {
+    console.log(this.state.value.location);
+    let queryString = this.state.value.location.toString();
     this.state.geocoder
-      .forwardGeocode({ query: this.state.value.location, limit: 2 })
+      .forwardGeocode({
+        query: queryString,
+        limit: 2,
+      })
       .send()
       .then((response) => {
         const match = response.body;
         //console.log(match);
         this.setState({ suggestionList: match.features });
-      });
+      })
+      .catch((error) => {});
   }
 
   renderSuggestions() {
-    return this.state.suggestionList.map(({ place_name }, index, list) => ({
-      label: place_name,
-      value: place_name,
-    }));
+    return this.state.suggestionList.map(
+      ({ place_name, center }, index, list) => ({
+        label: place_name,
+        center: center,
+      })
+    );
   }
 
   handleFormSubmit(e) {

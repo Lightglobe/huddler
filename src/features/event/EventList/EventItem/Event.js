@@ -80,7 +80,7 @@ export default class Event extends Component {
               </Text>
             </Box>
             <Box direction="row" gap="xxsmall">
-              <Location /> <Text>{event.city}</Text>
+              <Location /> <Text>{event.location.label}</Text>
             </Box>
           </Box>
           <NavLink className="link__text" to={`/events/${event.id}`}>
