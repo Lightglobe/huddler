@@ -12,6 +12,7 @@ import EventForm from "../../features/event/EventForm/EventForm";
 import Home from "../../features/home/Home";
 import "./App.css";
 import TestComponent from "../../features/testarea/TestComponent";
+import ModalManager from "../../features/modals/ModalManager";
 const theme = {
   global: {
     colors: {
@@ -103,48 +104,56 @@ export default class App extends Component {
                 setShowSidebar={this.setShowSidebar}
                 showSidebar={showSidebar}
               />
-              <Route exact path="/">
-                <Home size={size} />
-              </Route>
-              <Route
-                path="/(.+)"
-                render={() => (
-                  <>
-                    <Route exact path="/events">
-                      <EventDashboard
-                        size={size}
-                        showSidebar={this.state.showSidebar}
-                        setShowSidebar={this.setShowSidebar}
-                        sidebar={this.state.sidebar}
-                      />
-                    </Route>
+              <Box
+                style={{ minHeight: "100vh" }}
+                background="darkOne"
+                elevation="none"
+              >
+                <ModalManager>
+                  <Route exact path="/">
+                    <Home size={size} />
+                  </Route>
+                  <Route
+                    path="/(.+)"
+                    render={() => (
+                      <>
+                        <Route exact path="/events">
+                          <EventDashboard
+                            size={size}
+                            showSidebar={this.state.showSidebar}
+                            setShowSidebar={this.setShowSidebar}
+                            sidebar={this.state.sidebar}
+                          />
+                        </Route>
 
-                    <Route exact path="/events/:id">
-                      <EventDetails
-                        size={size}
-                        showSidebar={this.state.showSidebar}
-                        setShowSidebar={this.setShowSidebar}
-                        sidebar={this.state.sidebar}
-                      />
-                    </Route>
-                    <Route path="/people">
-                      <PeopleDashboard />
-                    </Route>
-                    <Route path="/profile/:id">
-                      <UserDetails />
-                    </Route>
-                    <Route path="/settings">
-                      <SettingsDashboard />
-                    </Route>
-                    <Route path="/createEvent">
-                      <EventForm />
-                    </Route>
-                    <Route path="/test">
-                      <TestComponent />
-                    </Route>
-                  </>
-                )}
-              />
+                        <Route exact path="/events/:id">
+                          <EventDetails
+                            size={size}
+                            showSidebar={this.state.showSidebar}
+                            setShowSidebar={this.setShowSidebar}
+                            sidebar={this.state.sidebar}
+                          />
+                        </Route>
+                        <Route path="/people">
+                          <PeopleDashboard />
+                        </Route>
+                        <Route path="/profile/:id">
+                          <UserDetails />
+                        </Route>
+                        <Route path="/settings">
+                          <SettingsDashboard />
+                        </Route>
+                        <Route path="/createEvent">
+                          <EventForm />
+                        </Route>
+                        <Route path="/test">
+                          <TestComponent />
+                        </Route>
+                      </>
+                    )}
+                  />
+                </ModalManager>
+              </Box>
             </Box>
           )}
         </ResponsiveContext.Consumer>

@@ -9,8 +9,24 @@ import {
 } from "grommet-icons";
 import moment from "moment";
 import MapComponent from "../EventMap/MapComponent";
+import { openModal } from "../../modals/modalActions";
+import { connect } from "react-redux";
 
-const EventDetailsBody = ({ date, location, description, attendees }) => {
+const mapStateToProps = (state) => ({
+  modal: state.modal,
+});
+
+const actions = {
+  openModal,
+};
+
+const EventDetailsBody = ({
+  date,
+  location,
+  description,
+  attendees,
+  openModal,
+}) => {
   const [showAttendance, setShowAttendance] = useState(false);
   const [showMap, setShowMap] = useState(false);
   return (
@@ -24,7 +40,15 @@ const EventDetailsBody = ({ date, location, description, attendees }) => {
         <Box gap="medium" direction="row" justify="start">
           <Location />
           <Text>
-            <Anchor color="brand" onClick={() => setShowMap(true)}>
+            <Anchor
+              color="brand"
+              onClick={() =>
+                openModal("MapModal", {
+                  center: location.center,
+                  feature: location.feature,
+                })
+              }
+            >
               {location.label}
             </Anchor>
           </Text>
@@ -111,4 +135,4 @@ const EventDetailsBody = ({ date, location, description, attendees }) => {
   );
 };
 
-export default EventDetailsBody;
+export default connect(mapStateToProps, actions)(EventDetailsBody);
