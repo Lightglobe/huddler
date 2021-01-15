@@ -25,7 +25,7 @@ const EventDetailsBody = ({ date, location, description, attendees }) => {
           <Location />
           <Text>
             <Anchor color="brand" onClick={() => setShowMap(true)}>
-              {location}
+              {location.label}
             </Anchor>
           </Text>
         </Box>
@@ -103,7 +103,7 @@ const EventDetailsBody = ({ date, location, description, attendees }) => {
             />
           </Box>
           <Box fill background="darkOne">
-            <MapComponent />
+            <MapComponent center={location.center} feature={location.feature} />
           </Box>
         </Layer>
       )}

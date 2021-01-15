@@ -236,6 +236,7 @@ class EventForm extends Component {
       ({ place_name, center }, index, list) => ({
         label: place_name,
         center: center,
+        feature: list[index],
       })
     );
   }

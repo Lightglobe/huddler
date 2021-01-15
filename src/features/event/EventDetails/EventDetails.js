@@ -51,7 +51,7 @@ const EventDetails = ({
             />
             <EventDetailsBody
               date={event.date}
-              location={event.venue + ", " + event.city}
+              location={event.location}
               description={event.description}
               attendees={event.attendees}
             />
