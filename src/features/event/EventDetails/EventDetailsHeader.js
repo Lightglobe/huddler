@@ -12,6 +12,7 @@ import {
 } from "grommet";
 import { Sign } from "grommet-icons";
 import EventForm from "../EventForm/EventForm";
+import { withRouter } from "react-router";
 
 const EventDetailsHeader = ({
   title,
@@ -21,6 +22,9 @@ const EventDetailsHeader = ({
   setShowSidebar,
   showSidebar,
   size,
+  deleteEvent,
+  id,
+  history,
 }) => {
   return (
     <Stack anchor="bottom-left" flex>
@@ -53,7 +57,13 @@ const EventDetailsHeader = ({
           gap="small"
           margin={{ right: size === "small" ? "550px" : "300px" }}
         >
-          <Anchor className="link__text" onClick={() => console.log(category)}>
+          <Anchor
+            className="link__text"
+            onClick={() => {
+              history.goBack();
+              deleteEvent(id);
+            }}
+          >
             <div
               className="border__gradient button"
               style={{ background: "#ff6961" }}
@@ -99,4 +109,4 @@ const EventDetailsHeader = ({
   );
 };
 
-export default EventDetailsHeader;
+export default withRouter(EventDetailsHeader);

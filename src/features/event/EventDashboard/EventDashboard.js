@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Box } from "grommet";
 import EventActivity from "./EventActivity";
 import EventList from "../EventList/EventList";
-import cuid from "cuid";
 import { connect } from "react-redux";
 import EventForm from "../EventForm/EventForm";
 
@@ -23,7 +22,9 @@ class EventDashboard extends Component {
           pad={{ bottom: "large" }}
           style={{ paddingTop: "90px" }}
         >
-          <EventList events={events} />
+          <Box direction="column">
+            {events.length > 0 && <EventList events={events} />}
+          </Box>
         </Box>
         <EventActivity
           size={this.props.size}

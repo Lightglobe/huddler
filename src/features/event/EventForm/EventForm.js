@@ -80,7 +80,7 @@ const renderInputFormField = ({
   ...custom
 }) => {
   return (
-    <FormField border round="xsmall" error={touched && !!error} {...custom}>
+    <FormField border round="xsmall" error={touched && error} {...custom}>
       <TextInput {...input} {...custom} value={value} />
     </FormField>
   );
@@ -243,7 +243,6 @@ class EventForm extends Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
     if (this.state.value.id) {
       this.props.updateEvent(this.state.value);
     } else {
@@ -258,7 +257,6 @@ class EventForm extends Component {
 
   render() {
     const { submitting, error } = this.props;
-
     return (
       <Box margin="auto" pad={{ top: "70px" }}>
         <Text
