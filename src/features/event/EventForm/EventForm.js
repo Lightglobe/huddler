@@ -1,24 +1,20 @@
 import React, { Component } from "react";
-import {
-  Form,
-  Box,
-  Button,
-  Text,
-  TextInput,
-  Select,
-  TextArea,
-  DateInput,
-  MaskedInput,
-  FormField,
-} from "grommet";
+import { Form, Box, Button, Text } from "grommet";
 
 import { withRouter } from "react-router";
-import { parse } from "date-fns";
-import { Clock } from "grommet-icons";
 import { connect } from "react-redux";
 import { createEvent, updateEvent } from "../eventActions";
-import cuid from "cuid";
+
+import renderInputFormField from "./eventField/renderInputFormField";
+import renderInputSuggestionFormField from "./eventField/renderInputSuggestionFormField";
+import renderSelectFormField from "./eventField/renderSelectFormField";
+import renderDateInputField from "./eventField/renderDateInputField";
+import renderMaskedInputField from "./eventField/renderMaskedInputField";
+import renderTextAreaField from "./eventField/renderTextAreaField";
 import { reduxForm, Field } from "redux-form";
+
+import { parse } from "date-fns";
+import cuid from "cuid";
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 
 const defaultValue = {
@@ -73,122 +69,6 @@ const validate = (values) => {
   return errors;
 };
 
-const renderInputFormField = ({
-  value,
-  input,
-  meta: { touched, invalid, error },
-  ...custom
-}) => {
-  return (
-    <FormField border round="xsmall" error={touched && error} {...custom}>
-      <TextInput {...input} {...custom} value={value} />
-    </FormField>
-  );
-};
-
-const renderInputSuggestionFormField = ({
-  fetch,
-  suggestions,
-  value,
-  input,
-  meta: { touched, invalid, error },
-  ...custom
-}) => {
-  return (
-    <FormField border round="xsmall" error={touched && error} {...custom}>
-      <TextInput
-        {...input}
-        {...custom}
-        value={value}
-        onChange={fetch}
-        suggestions={suggestions}
-      />
-    </FormField>
-  );
-};
-
-const renderSelectFormField = ({
-  value,
-  input,
-  meta: { touched, invalid, error },
-  ...custom
-}) => {
-  return (
-    <FormField border round="xsmall" error={touched && error} {...custom}>
-      <Select {...custom} {...input} value={value} />
-    </FormField>
-  );
-};
-
-const renderDateInputField = ({
-  value,
-  input,
-  meta: { touched, invalid, error },
-  ...custom
-}) => {
-  return (
-    <FormField border round="xsmall" {...custom} error={touched && error}>
-      <DateInput {...custom} {...input} value={value} format="dd/mm/yyyy" />
-    </FormField>
-  );
-};
-
-const renderMaskedInputField = ({
-  value,
-  input,
-  meta: { touched, invalid, error },
-  ...custom
-}) => (
-  <FormField {...custom} error={touched && error}>
-    <Box direction="row" border round="xsmall" align="center">
-      <MaskedInput
-        error={touched && error}
-        required
-        plain
-        mask={[
-          {
-            length: [1, 2],
-            options: Array.from({ length: 12 }, (v, k) => k + 1),
-            regexp: /^1[0,1-2]$|^0?[1-9]$|^0$/,
-            placeholder: "hh",
-          },
-          { fixed: ":" },
-          {
-            length: 2,
-            options: ["00", "15", "30", "45"],
-            regexp: /^[0-5][0-9]$|^[0-9]$/,
-            placeholder: "mm",
-          },
-          { fixed: " " },
-          {
-            length: 2,
-            options: ["a.m.", "p.m."],
-            regexp: /^[ap]m$|^[AP]M$|^[aApP]$/,
-            placeholder: "ap",
-          },
-        ]}
-        value={value}
-        name="time"
-      />
-      <Box pad={{ right: "15px" }}>
-        <Clock />
-      </Box>
-    </Box>
-  </FormField>
-);
-
-const renderTextAreaField = ({
-  value,
-  input,
-  meta: { touched, invalid, error },
-  ...custom
-}) => {
-  return (
-    <FormField border round="xsmall" {...custom} error={touched && error}>
-      <TextArea {...custom} {...input} value={value} />
-    </FormField>
-  );
-};
 class EventForm extends Component {
   constructor(props) {
     super(props);
@@ -203,6 +83,20 @@ class EventForm extends Component {
   }
 
   setValue = (value) => this.setState({ value: value });
+
+  handleFormSubmit(e) {
+    e.preventDefault();
+    if (this.state.value.id) {
+      this.props.updateEvent(this.state.value);
+    } else {
+      const newEvent = {
+        ...this.state.value,
+        id: cuid(),
+        hostPhotoURL: "/assets/user.png",
+      };
+      this.props.createEvent(newEvent);
+    }
+  }
 
   componentDidMount() {
     const options = {
@@ -225,7 +119,6 @@ class EventForm extends Component {
       .send()
       .then((response) => {
         const match = response.body;
-        //console.log(match);
         this.setState({ suggestionList: match.features });
       })
       .catch((error) => {});
@@ -239,20 +132,6 @@ class EventForm extends Component {
         feature: list[index],
       })
     );
-  }
-
-  handleFormSubmit(e) {
-    e.preventDefault();
-    if (this.state.value.id) {
-      this.props.updateEvent(this.state.value);
-    } else {
-      const newEvent = {
-        ...this.state.value,
-        id: cuid(),
-        hostPhotoURL: "/assets/user.png",
-      };
-      this.props.createEvent(newEvent);
-    }
   }
 
   render() {
