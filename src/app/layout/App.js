@@ -28,10 +28,13 @@ const theme = {
       height: "18px",
     },
     drop: {
+      background: {
+        dark: "darkOne",
+      },
       shadowSize: {
-        small: "0px",
-        medium: "0px",
-        large: "0px",
+        small: "0px 7px 12px -3px rgba(0,0,0,0.49);",
+        medium: "0px 7px 12px -3px rgba(0,0,0,0.49);",
+        large: "0px 7px 12px -3px rgba(0,0,0,0.49);",
       },
     },
   },

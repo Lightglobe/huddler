@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import MapModal from "./MapModal";
+import EventFormModal from "./EventFormModal";
 
 const modalLookup = {
   MapModal,
+  EventFormModal,
 };
 
 const mapStateToProps = (state) => ({

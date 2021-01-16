@@ -67,7 +67,7 @@ const validate = (values) => {
   return errors;
 };
 
-class EventForm extends Component {
+class EventFormHorizontal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -133,9 +133,9 @@ class EventForm extends Component {
   }
 
   render() {
-    const { submitting, error } = this.props;
+    const { submitting, error, closeParent } = this.props;
     return (
-      <Box margin="auto" pad={{ top: "70px" }}>
+      <Box>
         <Text
           size="large"
           weight="bold"
@@ -164,59 +164,66 @@ class EventForm extends Component {
             event.value.date = new Date(date);
 
             this.handleFormSubmit(event);
+            setTimeout(closeParent(), 3000);
           }}
         >
-          <Box margin={{ bottom: "small" }}>
-            <Field
-              component={renderInputFormField}
-              placeholder="Title"
-              value={this.state.title}
-              name="title"
-            />
+          <Box direction="row" margin={{ bottom: "small" }} gap="small">
+            <Box width="350px">
+              <Field
+                component={renderInputFormField}
+                placeholder="Title"
+                value={this.state.title}
+                name="title"
+              />
+            </Box>
+
+            <Box>
+              <Field
+                component={renderSelectFormField}
+                value={this.state.category}
+                name="category"
+                options={["Drinks", "Food", "Culture"]}
+                placeholder="Category"
+              />
+            </Box>
+          </Box>
+          <Box direction="row" margin={{ bottom: "small" }} gap="small">
+            <Box width="280px">
+              <Field
+                component={renderInputSuggestionFormField}
+                placeholder="Location"
+                fetch={this.fetchSuggestions}
+                suggestions={this.renderSuggestions()}
+                value={this.state.location}
+                name="location"
+              />
+            </Box>
+            <Box>
+              <Field
+                component={renderInputFormField}
+                placeholder="Venue"
+                value={this.state.venue}
+                name="venue"
+              />
+            </Box>
+          </Box>
+          <Box direction="row" margin={{ bottom: "small" }} gap="small">
+            <Box width="330px">
+              <Field
+                component={renderDateInputField}
+                value={this.state.date}
+                name="date"
+              />
+            </Box>
+            <Box>
+              <Field
+                component={renderMaskedInputField}
+                value={this.state.time}
+                name="time"
+              />
+            </Box>
           </Box>
 
-          <Box margin={{ bottom: "small" }}>
-            <Field
-              component={renderSelectFormField}
-              value={this.state.category}
-              name="category"
-              options={["Drinks", "Food", "Culture"]}
-              placeholder="Category"
-            />
-          </Box>
-          <Box margin={{ bottom: "small" }}>
-            <Field
-              component={renderInputSuggestionFormField}
-              placeholder="Location"
-              fetch={this.fetchSuggestions}
-              suggestions={this.renderSuggestions()}
-              value={this.state.location}
-              name="location"
-            />
-          </Box>
-
-          <Box margin={{ bottom: "small" }}>
-            <Field
-              component={renderInputFormField}
-              placeholder="Venue"
-              value={this.state.venue}
-              name="venue"
-            />
-          </Box>
-          <Box margin={{ bottom: "small" }}>
-            <Field
-              component={renderDateInputField}
-              value={this.state.date}
-              name="date"
-            />
-          </Box>
-          <Box margin={{ bottom: "small" }}>
-            <Field
-              component={renderMaskedInputField}
-              value={this.state.time}
-              name="time"
-            />
-          </Box>
           <Box margin={{ bottom: "small" }}>
             <Field
               component={renderTextAreaField}
@@ -244,6 +251,6 @@ class EventForm extends Component {
 
 export default withRouter(
   reduxForm({ form: "eventForm", validate })(
-    connect(mapStateToProps, actions)(EventForm)
+    connect(mapStateToProps, actions)(EventFormHorizontal)
   )
 );

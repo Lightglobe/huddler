@@ -4,9 +4,7 @@ import { FormClose } from "grommet-icons";
 
 export default class EventActivity extends Component {
   render() {
-    const element = React.cloneElement(this.props.content, {
-      createEvent: this.props.createEvent,
-    });
+    const element = React.cloneElement(this.props.content);
 
     return (
       <React.Fragment>
@@ -49,7 +47,9 @@ export default class EventActivity extends Component {
               />
             </Box>
             <Box fill background="darkOne" align="center" justify="center">
-              {element}
+              <Box margin={{ top: "400px" }} margin="auto">
+                {element}
+              </Box>
             </Box>
           </Layer>
         )}

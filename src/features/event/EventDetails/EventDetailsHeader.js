@@ -66,7 +66,7 @@ const EventDetailsHeader = ({
           >
             <div
               className="border__gradient button"
-              style={{ background: "#ff6961" }}
+              style={{ background: "#6e747d" }}
             >
               <Text size="small" margin={{ left: "5px" }} weight="bold">
                 Delete
@@ -79,7 +79,7 @@ const EventDetailsHeader = ({
           >
             <div
               className="border__gradient button"
-              style={{ background: "#98e690" }}
+              style={{ background: "#6e747d" }}
             >
               {showSidebar ? (
                 <Text size="small" margin={{ left: "5px" }} weight="bold">
