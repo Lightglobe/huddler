@@ -7,6 +7,17 @@ import SignedIn from "./Menu/SignedIn";
 import SignedOut from "./Menu/SignedOut";
 import EventForm from "../../../features/event/EventForm/EventForm";
 import "./Navbar.css";
+import { openModal } from "../../../features/modals/modalActions";
+import { connect } from "react-redux";
+
+const actions = {
+  openModal,
+};
+
+const mapStateToProps = (state) => {
+  return state;
+};
+
 class Navbar extends Component {
   state = {
     authenticated: true,
@@ -19,6 +30,7 @@ class Navbar extends Component {
 
   render() {
     const { authenticated } = this.state;
+    const { openModal } = this.props;
     return (
       <Nav>
         <Heading
@@ -33,9 +45,7 @@ class Navbar extends Component {
         <Box direction="row" gap="small" align="center">
           <Anchor
             className="link__text"
-            onClick={() =>
-              this.setShowSidebar(!this.props.showSidebar, <EventForm />)
-            }
+            onClick={() => openModal("EventFormModal")}
           >
             <div className="border__gradient button">
               <ScheduleNew className="icon" />
@@ -56,7 +66,10 @@ class Navbar extends Component {
             }
           />
           {authenticated ? (
-            <SignedIn signOut={this.handleSignout} />
+            <SignedIn
+              signOut={this.handleSignout}
+              setShowSidebar={this.setShowSidebar}
+            />
           ) : (
             <SignedOut signIn={this.handleSignin} />
           )}
@@ -66,4 +79,4 @@ class Navbar extends Component {
   }
 }
 
-export default withRouter(Navbar);
+export default withRouter(connect(mapStateToProps, actions)(Navbar));
