@@ -19,9 +19,13 @@ const Home = ({ size }) => {
           </Box>
         </Box>
         {size !== "small" && (
-          <Box align="center" style={{ width: "50%" }} margin={{ top: "80px" }}>
+          <Box
+            align="center"
+            style={{ width: "50%" }}
+            margin={{ top: "80px", right: "100px" }}
+          >
             <img
-              src="/assets/vector-creator.svg"
+              src="/assets/login_vector.svg"
               style={{ width: "100%" }}
               alt="hero"
             />
