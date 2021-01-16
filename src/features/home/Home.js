@@ -22,11 +22,11 @@ const Home = ({ size }) => {
           <Box
             align="center"
             style={{ width: "50%" }}
-            margin={{ top: "80px", right: "100px" }}
+            margin={{ top: "180px", right: "100px" }}
           >
             <img
-              src="/assets/login_vector.svg"
-              style={{ width: "100%" }}
+              src="/assets/home/outer_space_team.svg"
+              style={{ width: "80%" }}
               alt="hero"
             />
           </Box>
