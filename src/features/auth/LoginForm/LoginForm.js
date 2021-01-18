@@ -1,10 +1,20 @@
 import React, { Component } from "react";
-import { Form, Box, Button, Text, TextInput, FormField } from "grommet";
-import { Hide, View } from "grommet-icons";
+import { Form, Box, Button, Text } from "grommet";
 import { withRouter } from "react-router-dom";
 import { reduxForm, Field } from "redux-form";
 import renderInputFormField from "../../../app/common/FormFields/renderInputFormField";
 import renderInputPasswordField from "../../../app/common/FormFields/renderPasswordFormField";
+import { login } from "../authActions";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => ({
+  creds: state.creds,
+});
+
+const actions = {
+  login,
+};
+
 const defaultValue = {
   email: "",
   password: "",
@@ -17,8 +27,9 @@ class LoginForm extends Component {
     this.setState({ reveal: revealValue });
     console.log(this.state.reveal);
   };
+
   render() {
-    const { submitting, error } = this.props;
+    const { submitting, error, login } = this.props;
     return (
       <Box>
         <Text
@@ -40,6 +51,7 @@ class LoginForm extends Component {
           }}
           onSubmit={(event) => {
             console.log("Submit", event.value, event.touched);
+            event.preventDefault();
           }}
         >
           <Box plain round="small" color="white" margin={{ bottom: "20px" }}>
@@ -66,7 +78,10 @@ class LoginForm extends Component {
               type="submit"
               label="Login"
               color="brand"
-              onClick={() => this.props.history.push("/events")}
+              onClick={() => {
+                login(this.state.value);
+                this.props.history.push("/events");
+              }}
               disabled={error || submitting}
             />
           </Box>
@@ -76,4 +91,6 @@ class LoginForm extends Component {
   }
 }
 
-export default withRouter(reduxForm({ form: "loginForm" })(LoginForm));
+export default withRouter(
+  reduxForm({ form: "loginForm" })(connect(mapStateToProps, actions)(LoginForm))
+);

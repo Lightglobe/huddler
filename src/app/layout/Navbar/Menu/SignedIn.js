@@ -9,11 +9,21 @@ import {
   SettingsOption,
   Logout,
 } from "grommet-icons";
+import { connect } from "react-redux";
+import { logout } from "../../../../features/auth/authActions";
+
+const mapStateToProps = (state) => ({
+  authenticated: state.auth.authenticated,
+  currentUser: state.auth.currentUser,
+});
+
+const actions = {
+  logout,
+};
 
 class SignedIn extends React.Component {
   render() {
-    const { history, signOut, setShowSidebar } = this.props;
-
+    const { history, setShowSidebar, logout, currentUser } = this.props;
     return (
       <Menu
         dropBackground="darkThree"
@@ -65,7 +75,10 @@ class SignedIn extends React.Component {
           },
           {
             label: <Box alignSelf="center">Logout</Box>,
-            onClick: () => signOut(),
+            onClick: () => {
+              logout();
+              history.push("/");
+            },
             icon: (
               <Box pad={{ left: "medium", right: "small" }}>
                 <Logout size="medium" />
@@ -80,7 +93,7 @@ class SignedIn extends React.Component {
             border={{ color: "white", size: "small" }}
             size="small"
           />
-          <Text>Username</Text>
+          <Text>{currentUser}</Text>
           <FormDown />
         </Box>
       </Menu>
@@ -88,4 +101,4 @@ class SignedIn extends React.Component {
   }
 }
 
-export default withRouter(SignedIn);
+export default withRouter(connect(mapStateToProps, actions)(SignedIn));

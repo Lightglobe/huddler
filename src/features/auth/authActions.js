@@ -1,11 +1,13 @@
 import { LOGIN_USER, SIGN_OUT_USER } from "./authConstants";
 
 export const login = (creds) => {
-  return {
-    type: LOGIN_USER,
-    payload: {
-      creds,
-    },
+  return async (dispatch) => {
+    dispatch({
+      type: LOGIN_USER,
+      payload: {
+        creds,
+      },
+    });
   };
 };
 

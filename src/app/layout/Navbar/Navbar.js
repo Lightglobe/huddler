@@ -9,28 +9,26 @@ import EventForm from "../../../features/event/EventForm/EventForm";
 import "./Navbar.css";
 import { openModal } from "../../../features/modals/modalActions";
 import { connect } from "react-redux";
+import { login, logout } from "../../../features/auth/authActions";
 
 const actions = {
   openModal,
+  login,
+  logout,
 };
 
-const mapStateToProps = (state) => {
-  return state;
-};
+const mapStateToProps = (state) => ({
+  authenticated: state.auth.authenticated,
+});
 
 class Navbar extends Component {
-  state = {
-    authenticated: true,
-  };
-
-  handleSignin = () => this.setState({ authenticated: true });
+  handleSignin = () => login();
   handleSignout = () => this.setState({ authenticated: false });
   setShowSidebar = (show, component) =>
     this.props.setShowSidebar(show, component);
 
   render() {
-    const { authenticated } = this.state;
-    const { openModal } = this.props;
+    const { openModal, authenticated, logout, login } = this.props;
     return (
       <Nav>
         <Heading
@@ -41,39 +39,34 @@ class Navbar extends Component {
         >
           Huddler
         </Heading>
+        {authenticated ? (
+          <Box direction="row" gap="small" align="center">
+            <Anchor
+              className="link__text"
+              onClick={() => openModal("EventFormModal")}
+            >
+              <div className="border__gradient button">
+                <ScheduleNew className="icon" />
+                <Text size="small" margin={{ left: "5px" }} weight="bold">
+                  New Event
+                </Text>
+              </div>
+            </Anchor>
+            <NavLink to="/test">Test</NavLink>
 
-        <Box direction="row" gap="small" align="center">
-          <Anchor
-            className="link__text"
-            onClick={() => openModal("EventFormModal")}
-          >
-            <div className="border__gradient button">
-              <ScheduleNew className="icon" />
-              <Text size="small" margin={{ left: "5px" }} weight="bold">
-                New Event
-              </Text>
-            </div>
-          </Anchor>
-          <NavLink to="/test">Test</NavLink>
-
-          <Button
-            icon={<Notification />}
-            onClick={() =>
-              this.setShowSidebar(
-                !this.props.showSidebar,
-                <h1>Notification</h1>
-              )
-            }
-          />
-          {authenticated ? (
-            <SignedIn
-              signOut={this.handleSignout}
-              setShowSidebar={this.setShowSidebar}
+            <Button
+              icon={<Notification />}
+              onClick={() =>
+                this.setShowSidebar(
+                  !this.props.showSidebar,
+                  <h1>Notification</h1>
+                )
+              }
             />
-          ) : (
-            <SignedOut signIn={this.handleSignin} />
-          )}
-        </Box>
+
+            <SignedIn logout setShowSidebar={this.setShowSidebar} />
+          </Box>
+        ) : null}
       </Nav>
     );
   }
