@@ -5,12 +5,12 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { createEvent, updateEvent } from "../eventActions";
 
-import renderInputFormField from "./eventField/renderInputFormField";
-import renderInputSuggestionFormField from "./eventField/renderInputSuggestionFormField";
-import renderSelectFormField from "./eventField/renderSelectFormField";
-import renderDateInputField from "./eventField/renderDateInputField";
-import renderMaskedInputField from "./eventField/renderMaskedInputField";
-import renderTextAreaField from "./eventField/renderTextAreaField";
+import renderInputFormField from "../../../app/common/FormFields/renderInputFormField";
+import renderInputSuggestionFormField from "../../../app/common/FormFields/renderInputSuggestionFormField";
+import renderSelectFormField from "../../../app/common/FormFields/renderSelectFormField";
+import renderDateInputField from "../../../app/common/FormFields/renderDateInputField";
+import renderMaskedInputField from "../../../app/common/FormFields/renderMaskedInputField";
+import renderTextAreaField from "../../../app/common/FormFields/renderTextAreaField";
 import { reduxForm, Field } from "redux-form";
 
 import { parse } from "date-fns";

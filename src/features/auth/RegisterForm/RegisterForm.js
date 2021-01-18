@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { Form, Box, Button, Text, TextInput } from "grommet";
 import { Hide, View } from "grommet-icons";
 import { withRouter } from "react-router-dom";
+import { reduxForm } from "redux-form";
+
 const defaultValue = {};
-class LoginForm extends Component {
+class RegisterForm extends Component {
   state = { value: defaultValue, reveal: true };
   setValue = (value) => this.setState({ value: value });
   setReveal = (revealValue) => {
     this.setState({ reveal: revealValue });
-    console.log(this.state.reveal);
   };
 
   render() {
@@ -20,7 +21,7 @@ class LoginForm extends Component {
           margin={{ bottom: "medium" }}
           alignSelf="start"
         >
-          Login
+          Register
         </Text>
         <Form
           value={this.state.value}
@@ -42,7 +43,16 @@ class LoginForm extends Component {
             border={{ color: "white" }}
             margin={{ bottom: "20px" }}
           >
-            <TextInput plain placeholder="Email" name="username" />
+            <TextInput plain placeholder="Username" name="username" />
+          </Box>
+          <Box
+            plain
+            round="small"
+            color="white"
+            border={{ color: "white" }}
+            margin={{ bottom: "20px" }}
+          >
+            <TextInput plain placeholder="Email" name="email" />
           </Box>
 
           <Box
@@ -73,7 +83,7 @@ class LoginForm extends Component {
           <Box direction="row" justify="end" margin={{ top: "medium" }}>
             <Button
               type="submit"
-              label="Login"
+              label="Register"
               color="brand"
               onClick={() => this.props.history.push("/events")}
             />
@@ -84,4 +94,4 @@ class LoginForm extends Component {
   }
 }
 
-export default withRouter(LoginForm);
+export default withRouter(reduxForm({ form: "registerForm" })(RegisterForm));

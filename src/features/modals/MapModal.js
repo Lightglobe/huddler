@@ -23,7 +23,8 @@ const MapModal = ({ closeModal, center, feature }) => {
           align="center"
           direction="row"
           justify="end"
-          width="xlarge"
+          width="large"
+          fill
         >
           <Button
             onClick={() => closeModal()}

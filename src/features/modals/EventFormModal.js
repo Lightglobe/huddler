@@ -16,22 +16,22 @@ const mapStateToProps = (state, ownProps) => ({
 const EventFormModal = ({ closeModal }) => {
   return (
     <Box style={{ height: "100%" }} background="darkOne">
-      <Layer>
+      <Layer round="small" width="900px">
         <Box
           background="darkTwo"
           align="center"
           direction="row"
           justify="end"
-          width="500px"
+          width="xlarge"
+          fill
         >
           <Button
             onClick={() => closeModal()}
             icon={<FormClose size="large" />}
           />
         </Box>
-        <Box background="darkOne">
+        <Box background="darkOne" width="500px">
           <Box
-            fill
             background="darkTwo"
             round="small"
             overflow="auto"

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "grommet";
 
-import LoginForm from "../user/LoginForm/LoginForm";
+import LoginForm from "../auth/LoginForm/LoginForm";
 const Home = ({ size }) => {
   return (
     <Box background="darkOne" style={{ height: "100vh" }}>

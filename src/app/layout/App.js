@@ -20,7 +20,7 @@ const theme = {
       darkOne: "#1D1C2A",
       darkTwo: "#222232",
       darkThree: "#232334",
-      focus: "#232323",
+      focus: "none",
     },
     font: {
       family: "Ubuntu",
