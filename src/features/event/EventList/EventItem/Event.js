@@ -46,7 +46,7 @@ export default class Event extends Component {
           >
             <Text>{event.description}</Text>
           </Box>
-          {event.attendees && (
+          {event?.attendees && (
             <Box
               pad={{
                 left: "medium",
@@ -59,7 +59,7 @@ export default class Event extends Component {
               gap="medium"
             >
               <Box align="center" direction="row" gap="small">
-                {event.attendees.map((attendee) => (
+                {event?.attendees.map((attendee) => (
                   <EventAttendee
                     key={attendee.id}
                     id={attendee.id}
@@ -76,7 +76,9 @@ export default class Event extends Component {
             <Box direction="row" gap="xxsmall">
               <Clock />{" "}
               <Text>
-                {moment(new Date(event.date)).format("DD-MM-YYYY HH:mm")}
+                {moment(new Date(event.date.seconds * 1000)).format(
+                  "DD-MM-YYYY HH:mm"
+                )}
               </Text>
             </Box>
             <Box direction="row" gap="xxsmall">

@@ -12,9 +12,10 @@ import renderDateInputField from "../../../app/common/FormFields/renderDateInput
 import renderMaskedInputField from "../../../app/common/FormFields/renderMaskedInputField";
 import renderTextAreaField from "../../../app/common/FormFields/renderTextAreaField";
 import { reduxForm, Field } from "redux-form";
-
 import { parse } from "date-fns";
 import cuid from "cuid";
+import { moment } from "moment";
+
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 
 const defaultValue = {
@@ -30,14 +31,15 @@ const defaultValue = {
 const mapStateToProps = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
   let event = defaultValue;
-  if (eventId && state.events.length > 0) {
-    event = state.events.filter((event) => event.id === eventId)[0];
+  if (eventId && state.firestore.ordered.events.length > 0) {
+    event = state.firestore.ordered.events.filter(
+      (event) => event.id === eventId
+    )[0];
   }
   return {
     event,
   };
 };
-
 const actions = {
   createEvent,
   updateEvent,

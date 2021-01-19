@@ -14,8 +14,10 @@ const mapStateToPros = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
   let event = {};
 
-  if (eventId && state.events.length > 0) {
-    event = state.events.filter((event) => event.id === eventId)[0];
+  if (eventId && state.firestore.ordered.events.length > 0) {
+    event = state.firestore.ordered.events.filter(
+      (event) => event.id === eventId
+    )[0];
   }
 
   return {
@@ -59,7 +61,7 @@ const EventDetails = ({
                 deleteEvent={deleteEvent}
               />
               <EventDetailsBody
-                date={event.date}
+                date={new Date(event.date.seconds * 1000)}
                 location={event.location}
                 description={event.description}
                 attendees={event.attendees}

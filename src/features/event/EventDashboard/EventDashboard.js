@@ -6,8 +6,10 @@ import { connect } from "react-redux";
 import EventForm from "../EventForm/EventForm";
 import { loadEvents } from "../eventActions";
 import LoadingComponent from "../../../app/common/Loader/LoadingComponent";
+import { firestoreConnect } from "react-redux-firebase";
+
 const mapStateToProps = (state) => ({
-  events: state.events,
+  events: state.firestore.ordered.events,
   loading: state.async.loading,
 });
 
@@ -47,4 +49,6 @@ class EventDashboard extends Component {
   }
 }
 
-export default connect(mapStateToProps, { actions })(EventDashboard);
+export default connect(mapStateToProps, { actions })(
+  firestoreConnect([{ collection: "events" }])(EventDashboard)
+);

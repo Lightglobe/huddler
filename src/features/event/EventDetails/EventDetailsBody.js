@@ -49,7 +49,7 @@ const EventDetailsBody = ({
                 })
               }
             >
-              {location.label}
+              {location?.label}
             </Anchor>
           </Text>
         </Box>
