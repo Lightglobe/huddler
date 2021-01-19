@@ -4,8 +4,6 @@ import { Notification, ScheduleNew } from "grommet-icons";
 import { Heading, Box, Button, Anchor, Text } from "grommet";
 import { withRouter, NavLink } from "react-router-dom";
 import SignedIn from "./Menu/SignedIn";
-import SignedOut from "./Menu/SignedOut";
-import EventForm from "../../../features/event/EventForm/EventForm";
 import "./Navbar.css";
 import { openModal } from "../../../features/modals/modalActions";
 import { connect } from "react-redux";

@@ -13,6 +13,7 @@ import Home from "../../features/home/Home";
 import "./App.css";
 import TestComponent from "../../features/testarea/TestComponent";
 import ModalManager from "../../features/modals/ModalManager";
+import ReduxToastr from "react-redux-toastr";
 const theme = {
   global: {
     colors: {
@@ -100,6 +101,11 @@ export default class App extends Component {
     const { showSidebar } = this.state;
     return (
       <Grommet theme={theme} full>
+        <ReduxToastr
+          position="bottom-left"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+        />
         <ResponsiveContext.Consumer>
           {(size) => (
             <Box>

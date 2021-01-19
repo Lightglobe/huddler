@@ -7,17 +7,38 @@ import { Provider } from "react-redux";
 import { configureStore } from "./app/store/configureStore";
 import ScrollToTop from "./app/common/util/ScrollToTop";
 import { loadEvents } from "./features/event/eventActions";
+import { createFirestoreInstance } from "redux-firestore";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
+import firebase from "./app/config/firebase";
+
 const store = configureStore();
 store.dispatch(loadEvents());
+
+const rrfConfig = {
+  userProfile: "users",
+  attachAuthIsReady: true,
+  useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
+  // enableClaims: true // Get custom claims along with the profile
+};
+
+const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance, // <- needed if using firestore
+};
 
 let render = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <BrowserRouter>
-        <ScrollToTop>
-          <App />
-        </ScrollToTop>
-      </BrowserRouter>
+      <ReactReduxFirebaseProvider {...rrfProps}>
+        <BrowserRouter>
+          <ScrollToTop>
+            <App />
+          </ScrollToTop>
+        </BrowserRouter>
+      </ReactReduxFirebaseProvider>
     </Provider>,
     document.getElementById("root")
   );
