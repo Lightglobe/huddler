@@ -29,7 +29,7 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { submitting, error, login } = this.props;
+    const { submitting, error, pristine, login, handleSubmit } = this.props;
     return (
       <Box>
         <Text
@@ -49,11 +49,18 @@ class LoginForm extends Component {
           onReset={() => {
             this.setValue(defaultValue);
           }}
-          onSubmit={(event) => {
-            console.log("Submit", event.value, event.touched);
-            event.preventDefault();
-          }}
+          onSubmit={handleSubmit(login)}
         >
+          {error && (
+            <Box
+              round="xsmall"
+              margin={{ bottom: "20px" }}
+              width="400px"
+              background="#F23D3A"
+            >
+              <Text margin="small">{error}</Text>
+            </Box>
+          )}
           <Box plain round="small" color="white" margin={{ bottom: "20px" }}>
             <Field
               component={renderInputFormField}
@@ -73,16 +80,13 @@ class LoginForm extends Component {
               setReveal={this.setReveal}
             />
           </Box>
+
           <Box direction="row" justify="end" margin={{ top: "medium" }}>
             <Button
               type="submit"
               label="Login"
               color="brand"
-              onClick={() => {
-                login(this.state.value);
-                this.props.history.push("/events");
-              }}
-              disabled={error || submitting}
+              disabled={pristine || submitting}
             />
           </Box>
         </Form>

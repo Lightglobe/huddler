@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./app/layout/App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router";
 import { Provider } from "react-redux";
 import { configureStore } from "./app/store/configureStore";
 import ScrollToTop from "./app/common/util/ScrollToTop";
@@ -11,6 +12,9 @@ import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import firebase from "./app/config/firebase";
 import { loadEvents } from "./features/event/eventActions";
+import createBrowserHistory from "history/createBrowserHistory";
+
+export const history = createBrowserHistory();
 
 const store = configureStore();
 store.dispatch(loadEvents());
@@ -32,11 +36,11 @@ let render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
-        <BrowserRouter>
+        <Router history={history}>
           <ScrollToTop>
             <App />
           </ScrollToTop>
-        </BrowserRouter>
+        </Router>
       </ReactReduxFirebaseProvider>
     </Provider>,
     document.getElementById("root")

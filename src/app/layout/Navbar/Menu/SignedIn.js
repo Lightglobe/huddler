@@ -23,7 +23,7 @@ const actions = {
 
 class SignedIn extends React.Component {
   render() {
-    const { history, setShowSidebar, logout, currentUser } = this.props;
+    const { history, setShowSidebar, signout, auth } = this.props;
     return (
       <Menu
         dropBackground="darkThree"
@@ -76,8 +76,7 @@ class SignedIn extends React.Component {
           {
             label: <Box alignSelf="center">Logout</Box>,
             onClick: () => {
-              logout();
-              history.push("/");
+              signout();
             },
             icon: (
               <Box pad={{ left: "medium", right: "small" }}>
@@ -93,7 +92,7 @@ class SignedIn extends React.Component {
             border={{ color: "white", size: "small" }}
             size="small"
           />
-          <Text>{currentUser}</Text>
+          <Text>{auth.email}</Text>
           <FormDown />
         </Box>
       </Menu>

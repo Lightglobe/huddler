@@ -8,6 +8,8 @@ import "./Navbar.css";
 import { openModal } from "../../../features/modals/modalActions";
 import { connect } from "react-redux";
 import { login, logout } from "../../../features/auth/authActions";
+import { withFirebase } from "react-redux-firebase";
+import { history } from "../../../index";
 
 const actions = {
   openModal,
@@ -16,17 +18,21 @@ const actions = {
 };
 
 const mapStateToProps = (state) => ({
-  authenticated: state.auth.authenticated,
+  auth: state.firebase.auth,
 });
 
 class Navbar extends Component {
   handleSignin = () => login();
-  handleSignout = () => this.setState({ authenticated: false });
+  handleSignout = () => {
+    this.props.firebase.logout();
+    history.push("/");
+  };
   setShowSidebar = (show, component) =>
     this.props.setShowSidebar(show, component);
 
   render() {
-    const { openModal, authenticated, logout, login } = this.props;
+    const { openModal, auth, logout, login } = this.props;
+    const authenticated = auth.isLoaded && !auth.isEmpty;
     return (
       <Nav>
         <Heading
@@ -62,7 +68,11 @@ class Navbar extends Component {
               }
             />
 
-            <SignedIn logout setShowSidebar={this.setShowSidebar} />
+            <SignedIn
+              signout={this.handleSignout}
+              auth={auth}
+              setShowSidebar={this.setShowSidebar}
+            />
           </Box>
         ) : null}
       </Nav>
@@ -70,4 +80,6 @@ class Navbar extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, actions)(Navbar));
+export default withRouter(
+  withFirebase(connect(mapStateToProps, actions)(Navbar))
+);

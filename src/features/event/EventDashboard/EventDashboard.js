@@ -34,7 +34,7 @@ class EventDashboard extends Component {
             <LoadingComponent />
           ) : (
             <Box direction="column">
-              {events.length > 0 && <EventList events={events} />}
+              {events?.length > 0 && <EventList events={events} />}
             </Box>
           )}
         </Box>
