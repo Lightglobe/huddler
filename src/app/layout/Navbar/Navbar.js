@@ -7,14 +7,12 @@ import SignedIn from "./Menu/SignedIn";
 import "./Navbar.css";
 import { openModal } from "../../../features/modals/modalActions";
 import { connect } from "react-redux";
-import { login, logout } from "../../../features/auth/authActions";
+import { login } from "../../../features/auth/authActions";
 import { withFirebase } from "react-redux-firebase";
 import { history } from "../../../index";
 
 const actions = {
   openModal,
-  login,
-  logout,
 };
 
 const mapStateToProps = (state) => ({
@@ -31,7 +29,7 @@ class Navbar extends Component {
     this.props.setShowSidebar(show, component);
 
   render() {
-    const { openModal, auth, logout, login } = this.props;
+    const { openModal, auth } = this.props;
     const authenticated = auth.isLoaded && !auth.isEmpty;
     return (
       <Nav>

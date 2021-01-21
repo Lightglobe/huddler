@@ -10,16 +10,13 @@ import {
   Logout,
 } from "grommet-icons";
 import { connect } from "react-redux";
-import { logout } from "../../../../features/auth/authActions";
 
 const mapStateToProps = (state) => ({
   authenticated: state.auth.authenticated,
   currentUser: state.auth.currentUser,
 });
 
-const actions = {
-  logout,
-};
+const actions = {};
 
 class SignedIn extends React.Component {
   render() {
@@ -88,11 +85,11 @@ class SignedIn extends React.Component {
       >
         <Box direction="row" gap="small" pad="small">
           <Avatar
-            src="http://placeimg.com/640/480/people"
+            src={auth.photoURL || "/assets/user.png"}
             border={{ color: "white", size: "small" }}
             size="small"
           />
-          <Text>{auth.email}</Text>
+          <Text>{auth.displayName}</Text>
           <FormDown />
         </Box>
       </Menu>

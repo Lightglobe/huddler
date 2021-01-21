@@ -1,18 +1,43 @@
 import React, { Component } from "react";
-import { Form, Box, Button, Text, TextInput } from "grommet";
-import { Hide, View } from "grommet-icons";
+import { Form, Box, Button, Text, Anchor } from "grommet";
 import { withRouter } from "react-router-dom";
-import { reduxForm } from "redux-form";
+import { reduxForm, Field } from "redux-form";
+import renderInputFormField from "../../../app/common/FormFields/renderInputFormField";
+import renderInputPasswordField from "../../../app/common/FormFields/renderPasswordFormField";
+import { connect } from "react-redux";
+import { registerUser } from "../authActions";
+const mapStateToProps = (state) => ({
+  creds: state.creds,
+});
 
-const defaultValue = {};
+const actions = {
+  registerUser,
+};
+
+const defaultValue = {
+  email: "",
+  password: "",
+  displayName: "",
+};
+
 class RegisterForm extends Component {
   state = { value: defaultValue, reveal: true };
   setValue = (value) => this.setState({ value: value });
   setReveal = (revealValue) => {
     this.setState({ reveal: revealValue });
+    console.log(this.state.reveal);
   };
 
   render() {
+    const {
+      submitting,
+      error,
+      pristine,
+      login,
+      handleSubmit,
+      registerUser,
+      setShowRegister,
+    } = this.props;
     return (
       <Box>
         <Text
@@ -21,7 +46,7 @@ class RegisterForm extends Component {
           margin={{ bottom: "medium" }}
           alignSelf="start"
         >
-          Register
+          Register new user
         </Text>
         <Form
           value={this.state.value}
@@ -32,60 +57,58 @@ class RegisterForm extends Component {
           onReset={() => {
             this.setValue(defaultValue);
           }}
-          onSubmit={(event) => {
-            console.log("Submit", event.value, event.touched);
-          }}
+          onSubmit={handleSubmit(registerUser)}
         >
-          <Box
-            plain
-            round="small"
-            color="white"
-            border={{ color: "white" }}
-            margin={{ bottom: "20px" }}
-          >
-            <TextInput plain placeholder="Username" name="username" />
+          {error && (
+            <Box
+              round="xsmall"
+              margin={{ bottom: "20px" }}
+              width="400px"
+              background="#F23D3A"
+            >
+              <Text margin="small">{error}</Text>
+            </Box>
+          )}
+          <Box plain round="small" color="white" margin={{ bottom: "20px" }}>
+            <Field
+              component={renderInputFormField}
+              placeholder="Display Name"
+              value={this.state.value}
+              name="displayName"
+            />
           </Box>
-          <Box
-            plain
-            round="small"
-            color="white"
-            border={{ color: "white" }}
-            margin={{ bottom: "20px" }}
-          >
-            <TextInput plain placeholder="Email" name="email" />
+          <Box plain round="small" color="white" margin={{ bottom: "20px" }}>
+            <Field
+              component={renderInputFormField}
+              placeholder="Email"
+              value={this.state.value}
+              name="email"
+            />
           </Box>
 
-          <Box
-            direction="row"
-            plain
-            round="small"
-            color="white"
-            border={{ color: "white" }}
-            align="center"
-          >
-            <TextInput
-              plain
+          <Box plain round="small" color="white">
+            <Field
+              component={renderInputPasswordField}
               placeholder="Password"
-              type={this.state.reveal ? "text" : "password"}
+              value={this.state.password}
               name="password"
-            />
-            <Button
-              icon={
-                this.state.reveal ? (
-                  <View size="medium" />
-                ) : (
-                  <Hide size="medium" />
-                )
-              }
-              onClick={() => this.setReveal(!this.state.reveal)}
+              reveal={this.state.reveal}
+              setReveal={this.setReveal}
             />
           </Box>
+
+          <Box margin={{ top: "20px" }}>
+            <Anchor onClick={() => setShowRegister(false)} color="brand">
+              Login instead?
+            </Anchor>
+          </Box>
+
           <Box direction="row" justify="end" margin={{ top: "medium" }}>
             <Button
               type="submit"
               label="Register"
               color="brand"
-              onClick={() => this.props.history.push("/events")}
+              disabled={pristine || submitting}
             />
           </Box>
         </Form>
@@ -94,4 +117,8 @@ class RegisterForm extends Component {
   }
 }
 
-export default withRouter(reduxForm({ form: "registerForm" })(RegisterForm));
+export default withRouter(
+  reduxForm({ form: "registerForm" })(
+    connect(mapStateToProps, actions)(RegisterForm)
+  )
+);

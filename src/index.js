@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./app/layout/App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
 import { Router } from "react-router";
 import { Provider } from "react-redux";
 import { configureStore } from "./app/store/configureStore";
@@ -20,9 +19,10 @@ const store = configureStore();
 store.dispatch(loadEvents());
 const rrfConfig = {
   userProfile: "users",
+  updateProfileOnLogin: false,
   attachAuthIsReady: true,
   useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
-  // enableClaims: true // Get custom claims along with the profile
+  enableClaims: true, // Get custom claims along with the profile
 };
 
 const rrfProps = {

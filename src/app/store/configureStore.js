@@ -3,6 +3,7 @@ import { rootReducer } from "../reducers/rootReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { getFirebase } from "react-redux-firebase";
+import { getFirestore } from "redux-firestore";
 
 export const configureStore = () => {
   const middlewares = [thunk.withExtraArgument(getFirebase)];
