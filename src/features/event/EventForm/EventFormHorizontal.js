@@ -12,7 +12,7 @@ import renderDateInputField from "../../../app/common/FormFields/renderDateInput
 import renderMaskedInputField from "../../../app/common/FormFields/renderMaskedInputField";
 import renderTextAreaField from "../../../app/common/FormFields/renderTextAreaField";
 import { reduxForm, Field } from "redux-form";
-
+import { closeModal } from "../../modals/modalActions";
 import { parse } from "date-fns";
 import cuid from "cuid";
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
@@ -41,6 +41,7 @@ const mapStateToProps = (state, ownProps) => {
 const actions = {
   createEvent,
   updateEvent,
+  closeModal,
 };
 
 const validate = (values) => {
@@ -51,7 +52,6 @@ const validate = (values) => {
     "location",
     "venue",
     "date",
-    "time",
     "description",
   ];
   requiredFields.forEach((field) => {
@@ -75,26 +75,12 @@ class EventFormHorizontal extends Component {
       geocoder: null,
       suggestionList: Array(0).fill("", 0, 0, ""),
     };
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleSubmission = this.handleSubmission.bind(this);
     this.setValue = this.setValue.bind(this);
     this.fetchSuggestions = this.fetchSuggestions.bind(this);
   }
 
   setValue = (value) => this.setState({ value: value });
-
-  handleFormSubmit(e) {
-    e.preventDefault();
-    if (this.state.value.id) {
-      this.props.updateEvent(this.state.value);
-    } else {
-      const newEvent = {
-        ...this.state.value,
-        id: cuid(),
-        hostPhotoURL: "/assets/user.png",
-      };
-      this.props.createEvent(newEvent);
-    }
-  }
 
   componentDidMount() {
     const options = {
@@ -132,8 +118,30 @@ class EventFormHorizontal extends Component {
     );
   }
 
+  handleSubmission = (e) => {
+    const date = parse(
+      this.state.value.time,
+      "h:mm aa",
+      new Date(this.state.value.date)
+    );
+    this.setState({ date: new Date(date) });
+    //e.preventDefault();
+    if (this.state.value.id) {
+      this.props.updateEvent(this.state.value);
+    } else {
+      const newEvent = {
+        ...this.state.value,
+        id: cuid(),
+        hostPhotoURL: "/assets/user.png",
+      };
+      this.props.createEvent(newEvent);
+    }
+
+    this.props.closeModal();
+  };
+
   render() {
-    const { submitting, error, closeParent } = this.props;
+    const { submitting, error, closeModal, handleSubmit } = this.props;
     return (
       <Box>
         <Text
@@ -154,18 +162,7 @@ class EventFormHorizontal extends Component {
           onReset={() => {
             this.setValue(defaultValue);
           }}
-          onSubmit={(event) => {
-            //console.log("Submit", event.value, event.touched);
-            const date = parse(
-              event.value.time,
-              "h:mm aa",
-              new Date(event.value.date)
-            );
-            event.value.date = new Date(date);
-
-            this.handleFormSubmit(event);
-            setTimeout(closeParent(), 3000);
-          }}
+          onSubmit={handleSubmit(this.handleSubmission)}
         >
           <Box direction="row" margin={{ bottom: "small" }} gap="small">
             <Box width="350px">
@@ -234,7 +231,7 @@ class EventFormHorizontal extends Component {
               name="description"
             />
           </Box>
-
+          {error}
           <Box direction="row" justify="end" margin={{ top: "medium" }}>
             <Button
               type="submit"
