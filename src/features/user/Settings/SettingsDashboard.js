@@ -7,16 +7,52 @@ import AboutPage from "./AboutPage";
 import PhotosPage from "./PhotosPage";
 import AccountPage from "./AccountPage";
 import { Switch } from "react-router-dom";
-const SettingsDashboard = () => {
+import { connect } from "react-redux";
+import { socialLogin, updatePassword } from "../../auth/authActions";
+import { updateProfile } from "../userActions";
+
+const mapStateToProps = (state) => ({
+  providerId:
+    state.firebase.auth.isLoaded &&
+    state.firebase.auth.providerData[0].providerId,
+  user: state.firebase.profile.isLoaded && state.firebase.profile,
+});
+
+const actions = {
+  updatePassword,
+  socialLogin,
+  updateProfile,
+};
+const SettingsDashboard = ({
+  updateProfile,
+  updatePassword,
+  socialLogin,
+  providerId,
+  user,
+}) => {
   return (
     <Box direction="row-responsive" height="100vh" background="darkOne">
       <Box margin={{ top: "100px", left: "100px" }} width="70%">
         <Switch>
           <Redirect exact from="/settings" to="/settings/basic" />
-          <Route path="/settings/basic" component={BasicPage} />
+          <Route
+            path="/settings/basic"
+            render={() => (
+              <BasicPage user={user} updateProfile={updateProfile} />
+            )}
+          />
           <Route path="/settings/about" component={AboutPage} />
           <Route path="/settings/photos" component={PhotosPage} />
-          <Route path="/settings/account" component={AccountPage} />
+          <Route
+            path="/settings/account"
+            render={() => (
+              <AccountPage
+                socialLogin={socialLogin}
+                providerId={providerId}
+                updatePassword={updatePassword}
+              />
+            )}
+          />
         </Switch>
       </Box>
       <Box width="30%" margin={{ top: "100px" }}>
@@ -26,4 +62,4 @@ const SettingsDashboard = () => {
   );
 };
 
-export default SettingsDashboard;
+export default connect(mapStateToProps, actions)(SettingsDashboard);

@@ -8096,7 +8096,7 @@
   "resolved" "https://registry.npmjs.org/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
   "version" "4.5.0"
 
-"lodash@^4.17.11", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.19", "lodash@^4.17.20", "lodash@^4.17.5", "lodash@>=3.5 <5":
+"lodash@^4.15.0", "lodash@^4.17.11", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.19", "lodash@^4.17.20", "lodash@^4.17.5", "lodash@>=3.5 <5":
   "integrity" "sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.20.tgz"
   "version" "4.17.20"
@@ -11094,6 +11094,14 @@
   "integrity" "sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw=="
   "resolved" "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   "version" "1.0.4"
+
+"revalidate@^1.2.0":
+  "integrity" "sha512-lzixPtHjSwjmn9gT3udLn/ItO7lrUfNABcLRfcUv0WX4LJ4s/WGJD1ahbJu5skczZtiV1yJQr2NslOSi8I+CiA=="
+  "resolved" "https://registry.npmjs.org/revalidate/-/revalidate-1.2.0.tgz"
+  "version" "1.2.0"
+  dependencies:
+    "lodash" "^4.15.0"
+    "object-assign" "^4.1.0"
 
 "rework-visit@1.0.0":
   "integrity" "sha1-mUWygD8hni96ygCtuLyfZA+ELJo="

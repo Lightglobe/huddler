@@ -1,5 +1,6 @@
-import { SubmissionError } from "redux-form";
+import { SubmissionError, reset } from "redux-form";
 import { history } from "../../index";
+import { toastr } from "react-redux-toastr";
 
 export const login = (creds) => {
   return async (dispatch, getState, getFirebase) => {
@@ -20,8 +21,7 @@ export const login = (creds) => {
 export const registerUser = (user) => async (
   dispatch,
   getState,
-  getFirebase,
-  getFirestore
+  getFirebase
 ) => {
   const firebase = getFirebase();
   const firestore = firebase.firestore();
@@ -47,6 +47,7 @@ export const registerUser = (user) => async (
       });
     history.push("/events");
   } catch (error) {
+    toastr.error("Oops", "Something went wrong");
     throw new SubmissionError({
       _error: error.message,
     });
@@ -77,4 +78,21 @@ export const socialLogin = (selectedProvider) => async (
   } catch (error) {
     console.log(error);
   }
+};
+
+export const updatePassword = (creds) => {
+  return async (dispatch, getState, getFirebase) => {
+    const firebase = getFirebase();
+    try {
+      const user = firebase.auth().currentUser;
+      await user.updatePassword(creds.newPassword1);
+      await dispatch(reset("updatePasswordForm"));
+      toastr.success("Success", "Your password has been updated");
+    } catch (error) {
+      toastr.error("Oops", "Something went wrong");
+      throw new SubmissionError({
+        _error: error.message,
+      });
+    }
+  };
 };
