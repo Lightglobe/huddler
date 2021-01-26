@@ -3,22 +3,7 @@ import { Box, Text, Button, Heading, Form } from "grommet";
 import renderRadioButtonGroupField from "../../../app/common/FormFields/renderRadioButtonGroupField";
 import renderInputFormField from "../../../app/common/FormFields/renderInputFormField";
 import renderDateInputField from "../../../app/common/FormFields/renderDateInputField";
-import {
-  combineValidators,
-  matchesField,
-  isRequired,
-  composeValidators,
-} from "revalidate";
 import { Field, reduxForm } from "redux-form";
-import { updateProfile } from "../userActions";
-import { moment } from "moment";
-
-const validate = combineValidators({
-  displayName: isRequired({ message: "Please enter your display name" }),
-  dateOfBirth: isRequired({ message: "Please enter your date of birth" }),
-  city: isRequired({ message: "Please enter your city" }),
-  gender: isRequired({ message: "Please enter your gender" }),
-});
 
 const BasicPage = ({
   submitting,
