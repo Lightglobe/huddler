@@ -47,8 +47,9 @@ const SettingsDashboard = ({
           />
           <Route
             path="/settings/about"
-            component={AboutPage}
-            updateProfile={updateProfile}
+            render={() => (
+              <AboutPage user={user} updateProfile={updateProfile} />
+            )}
           />
           <Route path="/settings/photos" component={PhotosPage} />
           <Route

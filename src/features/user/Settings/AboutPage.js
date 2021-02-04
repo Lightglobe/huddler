@@ -5,13 +5,6 @@ import renderInputFormField from "../../../app/common/FormFields/renderInputForm
 import renderRadioButtonGroupField from "../../../app/common/FormFields/renderRadioButtonGroupField";
 import renderTextAreaField from "../../../app/common/FormFields/renderTextAreaField";
 import renderSelectFormField from "../../../app/common/FormFields/renderSelectFormField";
-const defaultValue = {
-  status: "",
-  bio: "",
-  interests: "",
-  occupation: "",
-  origin: "",
-};
 
 const AboutPage = ({
   submitting,
@@ -19,7 +12,15 @@ const AboutPage = ({
   invalid,
   handleSubmit,
   updateProfile,
+  user,
 }) => {
+  const defaultValue = {
+    status: user?.status,
+    bio: user?.bio,
+    interests: user?.interests,
+    occupation: user?.occupation,
+    origin: user?.origin,
+  };
   const [value, setValue] = useState(defaultValue);
   return (
     <Box>
