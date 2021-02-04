@@ -35,7 +35,7 @@ class Navbar extends Component {
       <Nav>
         <Heading
           color="brand"
-          level="3"
+          level="2"
           margin="none"
           className="text__gradient"
         >

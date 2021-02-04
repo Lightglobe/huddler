@@ -9,7 +9,16 @@ const renderDateInputField = ({
 }) => {
   return (
     <FormField border round="xsmall" {...custom} error={touched && error}>
-      <DateInput {...custom} {...input} value={value} format="dd/mm/yyyy" />
+      <DateInput
+        {...custom}
+        {...input}
+        selected={input.value ? new Date(input.value) : null}
+        onChange={input.onChange}
+        onBlur={(e, val) => input.onBlur(val)}
+        value={value}
+        onChangeRaw={(e) => e.preventDefault()}
+        format="dd/mm/yyyy"
+      />
     </FormField>
   );
 };

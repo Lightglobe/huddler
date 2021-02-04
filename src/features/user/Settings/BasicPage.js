@@ -8,7 +8,6 @@ import { Field, reduxForm } from "redux-form";
 const BasicPage = ({
   submitting,
   error,
-  invalid,
   pristine,
   handleSubmit,
   user,
@@ -84,6 +83,7 @@ const BasicPage = ({
                 options={["Male", "Female"]}
                 value={value.gender}
                 name="gender"
+                title={"Gender"}
               />
             </Box>
 

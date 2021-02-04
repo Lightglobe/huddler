@@ -31,7 +31,11 @@ const SettingsDashboard = ({
   user,
 }) => {
   return (
-    <Box direction="row-responsive" height="100vh" background="darkOne">
+    <Box
+      direction="row-responsive"
+      style={{ minHeight: "100vh" }}
+      background="darkOne"
+    >
       <Box margin={{ top: "100px", left: "100px" }} width="70%">
         <Switch>
           <Redirect exact from="/settings" to="/settings/basic" />
@@ -41,7 +45,11 @@ const SettingsDashboard = ({
               <BasicPage user={user} updateProfile={updateProfile} />
             )}
           />
-          <Route path="/settings/about" component={AboutPage} />
+          <Route
+            path="/settings/about"
+            component={AboutPage}
+            updateProfile={updateProfile}
+          />
           <Route path="/settings/photos" component={PhotosPage} />
           <Route
             path="/settings/account"

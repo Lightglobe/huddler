@@ -19,7 +19,7 @@ const renderRadioButtonGroupField = ({
       }}
     >
       <Heading level="4" margin={{ left: "20px", bottom: "5px" }}>
-        Gender
+        {custom.title}
       </Heading>
       <RadioButtonGroup {...custom} {...input} value={value} margin="20px" />
     </FormField>
